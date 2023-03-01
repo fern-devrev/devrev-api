@@ -4,3 +4,5 @@ auth: apiKey
 auth-schemes:
   apiKey:
     header: Authorization
+error-discrimination:
+  strategy: status-code
