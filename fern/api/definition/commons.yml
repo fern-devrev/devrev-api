@@ -77,9 +77,6 @@ types:
   auth-token:
     extends:
       - atom-base
-      - _InlinedType0
-
-  _InlinedType0:
     properties:
       client_id:
         docs: |
@@ -138,9 +135,6 @@ types:
   user-base-summary:
     extends:
       - atom-base-summary
-      - _InlinedType1
-
-  _InlinedType1:
     properties:
       display_name:
         docs: |
@@ -178,9 +172,6 @@ types:
   rev-user-summary:
     extends:
       - user-base-summary
-      - _InlinedType2
-
-  _InlinedType2:
     properties:
       rev_org: optional<org-summary>
 
@@ -199,9 +190,6 @@ types:
   org-base-summary:
     extends:
       - atom-base-summary
-      - _InlinedType3
-
-  _InlinedType3:
     properties:
       display_name:
         docs: Name of the Organization.
@@ -332,9 +320,6 @@ types:
   dev-user:
     extends:
       - user-base
-      - _InlinedType4
-
-  _InlinedType4:
     properties:
       external_identities:
         docs: IDs of the Dev User outside the DevRev SOR.
@@ -343,9 +328,6 @@ types:
   user-base:
     extends:
       - atom-base
-      - _InlinedType5
-
-  _InlinedType5:
     properties:
       display_name:
         docs: |
@@ -390,9 +372,6 @@ types:
   part-base:
     extends:
       - atom-base
-      - _InlinedType6
-
-  _InlinedType6:
     properties:
       artifacts:
         docs: The attached artifacts.
@@ -432,9 +411,6 @@ types:
   tag-summary:
     extends:
       - atom-base-summary
-      - _InlinedType7
-
-  _InlinedType7:
     properties:
       name:
         docs: |
@@ -454,9 +430,6 @@ types:
   rev-org:
     extends:
       - org-base
-      - _InlinedType8
-
-  _InlinedType8:
     properties:
       description:
         docs: Description of the Rev organization.
@@ -475,9 +448,6 @@ types:
   org-base:
     extends:
       - atom-base
-      - _InlinedType9
-
-  _InlinedType9:
     properties:
       display_name:
         docs: Name of the Organization.
@@ -486,9 +456,6 @@ types:
   tag:
     extends:
       - atom-base
-      - _InlinedType10
-
-  _InlinedType10:
     properties:
       allowed_values:
         docs: |
@@ -539,9 +506,6 @@ types:
   timeline-comment:
     extends:
       - timeline-entry-base
-      - _InlinedType11
-
-  _InlinedType11:
     properties:
       body:
         docs: |
@@ -580,9 +544,6 @@ types:
   webhook:
     extends:
       - atom-base
-      - _InlinedType12
-
-  _InlinedType12:
     properties:
       event_types:
         docs: The event types that the webhook will receive.
@@ -668,9 +629,6 @@ types:
   work-base:
     extends:
       - atom-base
-      - _InlinedType14
-
-  _InlinedType14:
     properties:
       applies_to_part: optional<part-summary>
       artifacts:
@@ -707,9 +665,6 @@ types:
   part-base-summary:
     extends:
       - atom-base-summary
-      - _InlinedType15
-
-  _InlinedType15:
     properties:
       name:
         docs: Name of the part.
@@ -718,9 +673,37 @@ types:
   ticket:
     extends:
       - work-base
-      - _InlinedType16
-
-  _InlinedType16:
     properties:
       rev_org: optional<org-summary>
       severity: optional<ticket-severity>
+  
+  error-base: 
+    properties: 
+      message:
+        docs: The message associated with the error.
+        type: string
+
+errors: 
+  BadRequestError: 
+    status-code: 400
+    type: error-base
+  
+  UnauthorizedError: 
+    status-code: 401
+    type: error-base
+  
+  ForbiddenError: 
+    status-code: 403
+    type: error-base
+  
+  NotFoundError: 
+    status-code: 404
+    type: error-base
+  
+  TooManyRequestsError: 
+    status-code: 429
+    type: error-base
+  
+  InternalServerError: 
+    status-code: 500
+    type: error-base
