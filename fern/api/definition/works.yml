@@ -1,0 +1,255 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  root: __package__.yml
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    worksCreate:
+      path: /works.create
+      method: POST
+      docs: |
+        Creates new work ([issue](https://devrev.ai/docs/product/build),
+        [ticket](https://devrev.ai/docs/product/support)) item.
+      request:
+        body: works-create-request
+
+    worksDelete:
+      path: /works.delete
+      method: POST
+      docs: Deletes a work item.
+      request:
+        body: works-delete-request
+      response: works-delete-response
+
+    worksExport:
+      path: /works.export
+      method: GET
+      docs: Exports a collection of work items.
+      request:
+        query-parameters:
+          first:
+            docs: >
+              The number of work items to return. The default is '50', the
+              maximum
+              is '5000'.
+            type: optional<integer>
+          target_close_date.after:
+            docs: >
+              Filters for objects created after the provided timestamp
+              (inclusive).
+            type: optional<string>
+          target_close_date.before:
+            docs: |
+              Filters for objects created before the provided timestamp
+              (inclusive).
+            type: optional<string>
+      response: works-export-response
+
+    worksGet:
+      path: /works.get
+      method: GET
+      docs: Gets a work item's information.
+      request:
+        query-parameters:
+          id:
+            docs: The work's ID.
+            type: string
+      response: works-get-response
+
+    worksList:
+      path: /works.list
+      method: GET
+      docs: Lists a collection of work items.
+      request:
+        query-parameters:
+          cursor:
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+              starts from the beginning.
+            type: optional<string>
+          limit:
+            docs: |
+              The maximum number of works to return. The default is '50'.
+            type: optional<integer>
+          mode:
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+            type: optional<__package__.list-mode>
+          target_close_date.after:
+            docs: >
+              Filters for objects created after the provided timestamp
+              (inclusive).
+            type: optional<string>
+          target_close_date.before:
+            docs: |
+              Filters for objects created before the provided timestamp
+              (inclusive).
+            type: optional<string>
+      response: works-list-response
+
+    worksUpdate:
+      path: /works.update
+      method: POST
+      docs: Updates a work item's information.
+      request:
+        body: works-update-request
+      response: works-update-response
+
+types:
+  works-create-request:
+    properties:
+      applies_to_part:
+        docs: |
+          The [part](https://devrev.ai/docs/product/parts) that the work
+          applies to. Specifying a part is required when creating tickets and
+          issues.
+        type: string
+      artifacts:
+        docs: |
+          The IDs of the artifacts to associate with the work item.
+        type: optional<list<string>>
+      body:
+        docs: Body of the work object.
+        type: optional<string>
+      owned_by:
+        docs: The users that own the work.
+        type: list<string>
+      reported_by:
+        docs: The users that reported the work.
+        type: optional<list<string>>
+      stage: optional<commons.stage-init>
+      tags:
+        docs: Tags associated with the work item.
+        type: optional<list<commons.set-tag-with-value>>
+      target_close_date:
+        docs: Timestamp for when the work is expected to be complete.
+        type: optional<string>
+      title:
+        docs: Title of the work object.
+        type: string
+      type: commons.work-type
+
+  works-create-response:
+    properties:
+      work: commons.work
+
+  works-delete-request:
+    properties:
+      id:
+        docs: The work's ID.
+        type: string
+
+  works-delete-response: map<string, unknown>
+
+  works-export-response:
+    properties:
+      works:
+        docs: The resulting collection of work items.
+        type: list<commons.work>
+
+  works-get-response:
+    properties:
+      work: commons.work
+
+  works-list-response:
+    properties:
+      next_cursor:
+        docs: |
+          The cursor used to iterate subsequent results in accordance to the
+          sort order. If not set, then no later elements exist.
+        type: optional<string>
+      prev_cursor:
+        docs: |
+          The cursor used to iterate preceding results in accordance to the
+          sort order. If not set, then no prior elements exist.
+        type: optional<string>
+      works:
+        docs: The list of works.
+        type: list<commons.work>
+
+  works-update-request:
+    properties:
+      applies_to_part:
+        docs: Updates the part that the work applies to.
+        type: optional<string>
+      artifacts: optional<works-update-request-artifact-ids>
+      body:
+        docs: |
+          Updated body of the work object, or unchanged if not provided.
+        type: optional<string>
+      custom_schema_fragments:
+        docs: The custom schema fragments to use.
+        type: optional<list<string>>
+      id:
+        docs: The work's ID.
+        type: string
+      owned_by: optional<works-update-request-owned-by>
+      reported_by: optional<works-update-request-reported-by>
+      stage: optional<stage-update>
+      tags: optional<works-update-request-tags>
+      target_close_date:
+        docs: |
+          Updates the timestamp for when the work is expected to be complete.
+        type: optional<string>
+      title:
+        docs: |
+          Updated title of the work object, or unchanged if not provided.
+        type: optional<string>
+      type: commons.work-type
+
+  works-update-response:
+    properties:
+      work: commons.work
+
+  works-update-request-artifact-ids:
+    properties:
+      set:
+        docs: Sets the IDs to the provided artifact IDs.
+        type: optional<list<string>>
+
+  works-update-request-owned-by:
+    properties:
+      set:
+        docs: |
+          Sets the owner IDs to the provided user IDs. This must not be
+          empty.
+        type: optional<list<string>>
+
+  works-update-request-reported-by:
+    properties:
+      set:
+        docs: |
+          Sets the users that reported the work to the provided user IDs.
+        type: optional<list<string>>
+
+  stage-update:
+    docs: Updates an object's stage.
+    properties:
+      name:
+        docs: |
+          The updated name of the stage, otherwise unchanged if not set.
+        type: optional<string>
+
+  works-update-request-tags:
+    properties:
+      set:
+        docs: Sets the provided tags on the work item.
+        type: optional<list<commons.set-tag-with-value>>
+
+  works-update-request-issue:
+    properties:
+      priority: optional<commons.issue-priority>
+
+  works-update-request-ticket:
+    properties:
+      rev_org:
+        docs: |
+          Updates the Rev organization that the ticket is associated with.
+        type: optional<string>
+      severity: optional<commons.ticket-severity>

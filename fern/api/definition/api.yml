@@ -1,6 +1,8 @@
 name: api
-auth: bearer
-environments:
-  Production: https://api.example.com
-  Sandbox: https://sandbox.example.com
-default-environment: Production
+display-name: DevRev REST API
+headers: {}
+auth: auth-token
+auth-schemes:
+  auth-token:
+    header: Authorization
+    name: apiKey

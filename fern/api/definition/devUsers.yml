@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  root: __package__.yml
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    devUsersList:
+      path: /dev-users.list
+      method: GET
+      docs: Lists users within your organization.
+      request:
+        query-parameters:
+          cursor:
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+              starts from the beginning.
+            type: optional<string>
+          limit:
+            docs: |
+              The maximum number of Dev users to return. The default is '50'.
+            type: optional<integer>
+          mode:
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+            type: optional<__package__.list-mode>
+      response: dev-users-list-response
+
+    devUsersSelf:
+      path: /dev-users.self
+      method: GET
+      docs: Gets the authenticated user's information.
+      response: dev-users-self-response
+
+types:
+  dev-users-list-response:
+    docs: The response to listing the Dev users.
+    properties:
+      dev_users:
+        docs: The list of Dev users.
+        type: list<commons.dev-user>
+      next_cursor:
+        docs: |
+          The cursor used to iterate subsequent results in accordance to the
+          sort order. If not set, then no later elements exist.
+        type: optional<string>
+      prev_cursor:
+        docs: |
+          The cursor used to iterate preceding results in accordance to the
+          sort order. If not set, then no prior elements exist.
+        type: optional<string>
+
+  dev-users-self-response:
+    docs: |
+      The response to getting the information for the authenticated user.
+    properties:
+      dev_user: commons.dev-user

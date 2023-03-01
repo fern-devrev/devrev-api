@@ -1,0 +1,167 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    devOrgAuthConnectionsCreate:
+      path: /dev-orgs.auth-connections.create
+      method: POST
+      docs: |
+        Creates a new enterprise authentication connection for a Dev
+        organization. This authentication connection will not be enabled by
+        default for the organization and the user will need to explicitly
+        enable this. Keep in mind that at a time, only one authentication
+        connection can be enabled for a Dev organization. At present, only 5
+        enterprise connections can be created by an organization.
+      request:
+        body: dev-org-auth-connections-create-request
+
+    devOrgAuthConnectionsDelete:
+      path: /dev-orgs.auth-connections.delete
+      method: POST
+      docs: |
+        Deletes an authentication connection. Only enterprise connections which
+        are explicitly set up for a Dev organization can be deleted. Default
+        connections can not be deleted using this method.
+      request:
+        body: dev-org-auth-connections-delete-request
+
+    devOrgAuthConnectionsGet:
+      path: /dev-orgs.auth-connections.get
+      method: GET
+      docs: Retrieves the details for an authentication connection.
+      request:
+        query-parameters:
+          id:
+            docs: ID of the authentication connection.
+            type: string
+      response: dev-org-auth-connections-get-response
+
+    devOrgAuthConnectionsList:
+      path: /dev-orgs.auth-connections.list
+      method: GET
+      docs: |
+        Lists all the authentication connections available for a Dev
+        organization. This list will include both social and enterprise
+        connections which are either available by default or are explicitly
+        created by the user.
+      response: dev-org-auth-connections-list-response
+
+    devOrgAuthConnectionsToggle:
+      path: /dev-orgs.auth-connections.toggle
+      method: POST
+      docs: |
+        Enable or disable an authentication connection for a Dev organization.
+        Currently, only 1 authentication connection can be enabled at a time.
+        When a new authentication connection is enabled, the connection which
+        is currently enabled for the Dev organization is automatically
+        disabled.
+      request:
+        body: dev-org-auth-connections-toggle-request
+
+    devOrgAuthConnectionsUpdate:
+      path: /dev-orgs.auth-connections.update
+      method: POST
+      docs: Updates an authentication connection.
+      request:
+        body: dev-org-auth-connections-update-request
+
+types:
+  dev-org-auth-connections-create-request:
+    docs: |
+      Request to create a new enterprise authentication connection.
+    properties:
+      display_name:
+        docs: |
+          Display name of the authentication connection. This name will be
+          visible to all the users when they sign in to this Dev
+          organization. For example, if the display_name is 'abclogin', then
+          it would appear on the login button as 'Log in to abclogin'.
+        type: optional<string>
+      type: commons.dev-org-auth-connections-create-request-type
+
+  dev-org-auth-connections-create-response:
+    docs: |
+      Response for the request to create a new enterprise authentication
+      connection.
+    properties:
+      auth_connection: commons.auth-connection
+
+  dev-org-auth-connections-delete-request:
+    docs: |
+      Request to delete an enterprise authentication connection for a Dev
+      organization. A default connection and a connection which is currently
+      enabled cannot be deleted.
+    properties:
+      id:
+        docs: ID of the authentication connection to be deleted.
+        type: string
+
+  dev-org-auth-connections-get-response:
+    docs: |
+      Response object encapsulating the configuration details of an
+      authentication connection.
+    properties:
+      auth_connection: commons.auth-connection
+
+  dev-org-auth-connections-list-response:
+    docs: |
+      Response object for the request to list all the social and enterprise
+      authentication connections configured for a Dev organization.
+    properties:
+      auth_connections:
+        docs: |
+          List of all the authentication connections currently configured for
+          a Dev organization.
+        type: list<commons.auth-connection>
+
+  dev-org-auth-connections-toggle-request:
+    docs: |
+      Request to enable or disable an authentication connection for a Dev
+      organization.
+    properties:
+      id:
+        docs: ID of the authentication connection to be toggled.
+        type: string
+      toggle: optional<commons.auth-connection-toggle>
+
+  dev-org-auth-connections-update-request:
+    docs: |
+      Request to update an enterprise authentication connection for a Dev
+      organization.
+    properties:
+      display_name:
+        docs: |
+          New display name of the authentication connection. This name will
+          be visible to all the users when they sign in to this Dev
+          organization. For example, if the display_name is 'abclogin', then
+          it would appear on the login button as 'Log in to abclogin'.
+        type: optional<string>
+      id:
+        docs: |
+          ID of the authentication connection which is to be updated.
+        type: string
+      type: dev-org-auth-connections-update-request-type
+
+  dev-org-auth-connections-update-response:
+    docs: |
+      Response for the request to update an enterprise authentication
+      connection.
+    properties:
+      auth_connection: commons.auth-connection
+
+  dev-org-auth-connections-update-request-type:
+    docs: |
+      Specifies the type for the authentication connection. Different types
+      of authentication connections have different configuration parameters
+      that can be updated.
+    enum:
+      - google_apps
+      - none
+      - oidc
+      - samlp
+      - waad
