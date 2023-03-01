@@ -4,21 +4,32 @@ types:
   auth-token-grant-type:
     docs: Specifies the process of obtaining a token.
     enum:
-      - urn:devrev:params:oauth:grant-type:token-issue
-      - urn:ietf:params:oauth:grant-type:token-exchange
+      - value: urn:devrev:params:oauth:grant-type:token-issue
+        name: token_issue
+      - value: urn:ietf:params:oauth:grant-type:token-exchange
+        name: token_exchange
 
   auth-token-requested-token-type:
     docs: The type of the requested token.
     enum:
-      - urn:devrev:params:oauth:token-type:aat
-      - urn:devrev:params:oauth:token-type:aat:public
-      - urn:devrev:params:oauth:token-type:dev
-      - urn:devrev:params:oauth:token-type:pat
-      - urn:devrev:params:oauth:token-type:rev
-      - urn:devrev:params:oauth:token-type:session
-      - urn:devrev:params:oauth:token-type:session:dev0
-      - urn:devrev:params:oauth:token-type:sys
-      - urn:ietf:params:oauth:token-type:jwt
+      - value: urn:devrev:params:oauth:token-type:aat
+        name: token_type_aat
+      - value: urn:devrev:params:oauth:token-type:aat:public
+        name: token_type_public
+      - value: urn:devrev:params:oauth:token-type:dev
+        name: token_type_dev
+      - value: urn:devrev:params:oauth:token-type:pat
+        name: token_type_pat
+      - value: urn:devrev:params:oauth:token-type:rev
+        name: token_type_rev
+      - value: urn:devrev:params:oauth:token-type:session
+        name: token_type_session
+      - value: urn:devrev:params:oauth:token-type:session:dev0
+        name: token_type_dev0
+      - value: urn:devrev:params:oauth:token-type:sys
+        name: token_type_sys
+      - value: urn:ietf:params:oauth:token-type:jwt
+        name: token_type_jwt
 
   auth-tokens-rev-info:
     docs: |
@@ -60,13 +71,20 @@ types:
   auth-token-subject-token-type:
     docs: The type of the subject token.
     enum:
-      - urn:devrev:params:oauth:token-type:jwt:auth0
-      - urn:devrev:params:oauth:token-type:jwt:dev
-      - urn:devrev:params:oauth:token-type:revinfo
-      - urn:devrev:params:oauth:token-type:sysu
-      - urn:devrev:params:oauth:token-type:userinfo
-      - urn:devrev:params:oauth:token-type:userinfo:profile
-      - urn:ietf:params:oauth:token-type:jwt
+      - value: urn:devrev:params:oauth:token-type:jwt:auth0
+        name: token_type_jwt_auth0
+      - value: urn:devrev:params:oauth:token-type:jwt:dev
+        name: token_type_jwt_revinfo
+      - value: urn:devrev:params:oauth:token-type:revinfo
+        name: token_type_revinfo
+      - value: urn:devrev:params:oauth:token-type:sysu
+        name: token_type_sysu
+      - value: urn:devrev:params:oauth:token-type:userinfo
+        name: token_type_userinfo
+      - value: urn:devrev:params:oauth:token-type:userinfo:profile
+        name: token_type_userinfo_profile
+      - value: urn:ietf:params:oauth:token-type:jwt
+        name: token_type_jwt
 
   auth-token-token-type:
     docs: |
