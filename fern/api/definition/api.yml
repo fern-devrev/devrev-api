@@ -4,5 +4,9 @@ auth: apiKey
 auth-schemes:
   apiKey:
     header: Authorization
+    name: apiKey
 error-discrimination:
   strategy: status-code
+default-environment: Production
+environments: 
+  Production: https://api.devrev.ai
