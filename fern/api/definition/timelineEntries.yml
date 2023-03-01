@@ -12,9 +12,7 @@ service:
       path: /timeline-entries.create
       method: POST
       docs: Creates a new entry on an object's timeline.
-      request:
-        name: createTimelineRequest
-        body: timeline-entries-create-request
+      request: timeline-entries-create-request
 
     get:
       path: /timeline-entries.get
@@ -33,7 +31,7 @@ service:
       method: GET
       docs: Lists the timeline entries for an object.
       request:
-        name: listTimelineRequest
+        name: timeline-entries-list-request
         query-parameters:
           object:
             docs: The ID of the object to list timeline entries for.

@@ -13,7 +13,7 @@ service:
       method: GET
       docs: Lists users within your organization.
       request:
-        name: listDevUsersRequest
+        name: dev-users-list-request
         query-parameters:
           cursor:
             docs: >

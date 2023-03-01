@@ -9,7 +9,7 @@ service:
       method: GET
       docs: Gets the download URL for the artifact.
       request:
-        name: locateArtifactsRequest
+        name: locate-artifacts-request
         query-parameters:
           id:
             docs: The ID of the artifact to get the URL for.
@@ -20,9 +20,7 @@ service:
       method: POST
       docs: |
         Creates an artifact and generates an upload URL for its data.
-      request:
-        name: prepareArtifactsRequest
-        body: artifacts-prepare-request
+      request: artifacts-prepare-request
       response: artifacts-prepare-response
 
 types:

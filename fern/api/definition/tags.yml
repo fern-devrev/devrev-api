@@ -14,17 +14,13 @@ service:
       docs: |
         Creates a new tag, which is used to create associations between objects
         and a logical concept denoted by the tag's name.
-      request:
-        name: createTagRequest
-        body: tags-create-request
+      request: tags-create-request
 
     delete:
       path: /tags.delete
       method: POST
       docs: Deletes a tag.
-      request:
-        name: deleteTagRequest
-        body: tags-delete-request
+      request: tags-delete-request
       response: tags-delete-response
 
     get:
@@ -32,7 +28,7 @@ service:
       method: GET
       docs: Gets a tag's information.
       request:
-        name: getTagRequest
+        name: tags-get-request
         query-parameters:
           id:
             docs: The requested tag's ID.
@@ -44,7 +40,7 @@ service:
       method: GET
       docs: Lists the available tags.
       request:
-        name: listTagRequest
+        name: tags-list-request
         query-parameters:
           cursor:
             docs: >
@@ -66,9 +62,7 @@ service:
       path: /tags.update
       method: POST
       docs: Updates a tag's information.
-      request:
-        name: updateTagRequest
-        body: tags-update-request
+      request: tags-update-request
       response: tags-update-response
 
 types:

@@ -14,17 +14,13 @@ service:
       docs: |
         Creates a Rev organization in the authenticated user's Dev
         organization.
-      request:
-        name: createRevOrgRequest
-        body: rev-orgs-create-request
+      request: rev-orgs-create-request
 
     delete:
       path: /rev-orgs.delete
       method: POST
       docs: Deletes the Rev organization.
-      request:
-        name: deleteRevOrgRequest
-        body: rev-orgs-delete-request
+      request: rev-orgs-delete-request
       response: rev-orgs-delete-response
 
     get:
@@ -32,7 +28,7 @@ service:
       method: GET
       docs: Retrieves the Rev organization's information.
       request:
-        name: getRevOrgRequest
+        name: rev-orgs-get-request
         query-parameters:
           id:
             docs: The ID of the required Rev organization.
@@ -47,7 +43,7 @@ service:
         authenticated user's Dev Organization which the user is also authorized
         to access.
       request:
-        name: listRevOrgRequest
+        name: rev-orgs-list-request
         query-parameters:
           created_date.after:
             docs: >
@@ -90,9 +86,7 @@ service:
       path: /rev-orgs.update
       method: POST
       docs: Updates the Rev organization's information.
-      request:
-        name: updateRevOrgRequest
-        body: rev-orgs-update-request
+      request: rev-orgs-update-request
       response: rev-orgs-update-response
 
 types:
