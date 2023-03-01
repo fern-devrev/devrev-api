@@ -1,8 +1,6 @@
 name: api
-display-name: DevRev REST API
-headers: {}
-auth: auth-token
+display-name: DevRev API
+auth: apiKey
 auth-schemes:
-  auth-token:
+  apiKey:
     header: Authorization
-    name: apiKey
