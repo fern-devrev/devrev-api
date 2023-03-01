@@ -14,6 +14,7 @@ service:
         Creates new work ([issue](https://devrev.ai/docs/product/build),
         [ticket](https://devrev.ai/docs/product/support)) item.
       request: works-create-request
+      display-name: Create new work item
 
     delete:
       path: /works.delete
@@ -21,6 +22,7 @@ service:
       docs: Deletes a work item.
       request: works-delete-request
       response: works-delete-response
+      display-name: Delete work item
 
     export:
       path: /works.export
@@ -46,6 +48,7 @@ service:
               (inclusive).
             type: optional<string>
       response: works-export-response
+      display-name: Export collection of work items
 
     get:
       path: /works.get
@@ -58,6 +61,7 @@ service:
             docs: The work's ID.
             type: string
       response: works-get-response
+      display-name: Get work item
 
     list:
       path: /works.list
@@ -92,6 +96,7 @@ service:
               (inclusive).
             type: optional<string>
       response: works-list-response
+      display-name: List collection of work items
 
     update:
       path: /works.update
@@ -99,6 +104,7 @@ service:
       docs: Updates a work item's information.
       request: works-update-request
       response: works-update-response
+      display-name: Update work item
 
 types:
   works-create-request:

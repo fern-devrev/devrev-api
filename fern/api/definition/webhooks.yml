@@ -12,6 +12,7 @@ service:
       method: POST
       docs: Creates a new webhook target.
       request: webhooks-create-request
+      display-name: Create new webhook target
 
     delete:
       path: /webhooks.delete
@@ -19,6 +20,7 @@ service:
       docs: Deletes the requested webhook.
       request: webhooks-delete-request
       response: webhooks-delete-response
+      display-name: Delete webhook
 
     get:
       path: /webhooks.get
@@ -31,12 +33,14 @@ service:
             docs: ID for the webhook.
             type: string
       response: webhooks-get-response
+      display-name: Get webhook information
 
     list:
       path: /webhooks.list
       method: GET
       docs: Lists the webhooks.
       response: webhooks-list-response
+      display-name: List webhooks
 
     update:
       path: /webhooks.update
@@ -44,6 +48,7 @@ service:
       docs: Updates the requested webhook.
       request: webhooks-update-request
       response: webhooks-update-response
+      display-name: Update webhook
 
 types:
   webhooks-create-request:

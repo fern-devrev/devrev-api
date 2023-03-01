@@ -14,6 +14,7 @@ service:
         Creates a JWT corresponding to the requested token type for the
         authenticated user.
       request: auth-tokens-create-request
+      display-name: Create a JWT token
 
     delete:
       path: /auth-tokens.delete
@@ -22,6 +23,7 @@ service:
         Revokes the token that matches the given token ID issued under the
         given Dev organization.
       request: auth-tokens-delete-request
+      display-name: Revoke a token under Dev org
 
     get:
       path: /auth-tokens.get
@@ -37,6 +39,7 @@ service:
               The unique identifier of the token under a given Dev organization.
             type: string
       response: auth-tokens-get-response
+      display-name: Get token metadata
 
     list:
       path: /auth-tokens.list
@@ -64,6 +67,7 @@ service:
               subject.
             type: optional<string>
       response: auth-tokens-list-response
+      display-name: List token metadeta for all tokens of token type
 
     selfDelete:
       path: /auth-tokens.self.delete
@@ -72,6 +76,7 @@ service:
         Revokes all the tokens that matches the given token type created by the
         authenticated user.
       request: auth-tokens-self-delete-request
+      display-name: Delete token created by user
 
     update:
       path: /auth-tokens.update
@@ -81,6 +86,7 @@ service:
         organization.
       request: auth-tokens-update-request
       response: auth-tokens-update-response
+      display-name: Update token metadeta
 
 types:
   auth-tokens-create-request:
