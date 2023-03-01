@@ -653,6 +653,17 @@ types:
       title:
         docs: Title of the work object.
         type: string
+  
+  list-mode:
+    docs: |
+      The iteration mode to use. If "after", then entries after the provided
+      cursor will be returned, or if no cursor is provided, then from the
+      beginning. If "before", then entries before the provided cursor will be
+      returned, or if no cursor is provided, then from the end. Entries will
+      always be returned in the specified sort-by order.
+    enum:
+      - after
+      - before
 
   part-summary:
     properties:

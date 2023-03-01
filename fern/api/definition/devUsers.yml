@@ -2,7 +2,6 @@
 
 imports:
   commons: commons.yml
-  root: __package__.yml
 
 service:
   auth: true
@@ -29,7 +28,7 @@ service:
             docs: |
               The iteration mode to use, otherwise if not set, then "after" is
               used.
-            type: optional<__package__.list-mode>
+            type: optional<commons.list-mode>
       response: dev-users-list-response
 
     self:
