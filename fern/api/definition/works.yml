@@ -14,17 +14,13 @@ service:
       docs: |
         Creates new work ([issue](https://devrev.ai/docs/product/build),
         [ticket](https://devrev.ai/docs/product/support)) item.
-      request:
-        name: createWorksRequest
-        body: works-create-request
+      request: works-create-request
 
     delete:
       path: /works.delete
       method: POST
       docs: Deletes a work item.
-      request:
-        name: deleteWorksRequest
-        body: works-delete-request
+      request: works-delete-request
       response: works-delete-response
 
     export:
@@ -32,7 +28,7 @@ service:
       method: GET
       docs: Exports a collection of work items.
       request:
-        name: exportWorksRequest
+        name: works-export-request
         query-parameters:
           first:
             docs: >
@@ -57,7 +53,7 @@ service:
       method: GET
       docs: Gets a work item's information.
       request:
-        name: getWorksRequest
+        name: works-get-request
         query-parameters:
           id:
             docs: The work's ID.
@@ -69,7 +65,7 @@ service:
       method: GET
       docs: Lists a collection of work items.
       request:
-        name: listWorksRequest
+        name: works-list-request
         query-parameters:
           cursor:
             docs: >
@@ -102,9 +98,7 @@ service:
       path: /works.update
       method: POST
       docs: Updates a work item's information.
-      request:
-        name: updateWorksRequest
-        body: works-update-request
+      request: works-update-request
       response: works-update-response
 
 types:

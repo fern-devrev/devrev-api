@@ -13,9 +13,7 @@ service:
       docs: |
         Creates a JWT corresponding to the requested token type for the
         authenticated user.
-      request:
-        name: createAuthTokenRequest
-        body: auth-tokens-create-request
+      request: auth-tokens-create-request
 
     delete:
       path: /auth-tokens.delete
@@ -23,9 +21,7 @@ service:
       docs: |
         Revokes the token that matches the given token ID issued under the
         given Dev organization.
-      request:
-        name: revokeAuthTokenRequest
-        body: auth-tokens-delete-request
+      request: auth-tokens-delete-request
 
     get:
       path: /auth-tokens.get
@@ -34,7 +30,7 @@ service:
         Gets the token metadata corresponding to the given token ID under the
         given Dev organization.
       request:
-        name: getAuthTokenRequest
+        name: auth-tokens-get-request
         query-parameters:
           token_id:
             docs: |
@@ -49,7 +45,7 @@ service:
         Gets the token metadata for all the tokens corresponding to the given
         token type issued for a given subject.
       request:
-        name: listAuthTokenRequest
+        name: auth-tokens-list-request
         query-parameters:
           client_id:
             docs: |
@@ -75,9 +71,7 @@ service:
       docs: |
         Revokes all the tokens that matches the given token type created by the
         authenticated user.
-      request:
-        name: deleteSelfAuthTokenRequest
-        body: auth-tokens-self-delete-request
+      request: auth-tokens-self-delete-request
 
     update:
       path: /auth-tokens.update
@@ -85,9 +79,7 @@ service:
       docs: |
         Updates token metadata of a token issued under a given Dev
         organization.
-      request:
-        name: updateAuthTokenRequest
-        body: auth-tokens-update-request
+      request: auth-tokens-update-request
       response: auth-tokens-update-response
 
 types:

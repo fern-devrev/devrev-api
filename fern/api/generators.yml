@@ -13,7 +13,7 @@ groups:
         version: 0.2.2
         output:
           location: npm
-          package-name: '@fern-api/dev-rev'
+          package-name: '@fern-api/devrev'
           token: ${FERN_NPM_TOKEN}
         github:
           repository: fern-devrev/devrev-node
