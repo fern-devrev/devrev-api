@@ -12,11 +12,12 @@ service:
       method: POST
       docs: Creates a new entry on an object's timeline.
       request: timeline-entries-create-request
+      display-name: Create new entry on timeline
 
     get:
       path: /timeline-entries.get
       method: GET
-      docs: Gets an entry on an object's timeline.
+      docs: Gets an entry on timeline.
       request:
         name: getTimelineRequest
         query-parameters:
@@ -24,6 +25,7 @@ service:
             docs: The ID of the timeline entry to get.
             type: string
       response: timeline-entries-get-response
+      display-name: Get an entry on timeline
 
     list:
       path: /timeline-entries.list
@@ -52,6 +54,7 @@ service:
               used.
             type: optional<commons.list-mode>
       response: timeline-entries-list-response
+      display-name: List timeline entries
 
     update:
       path: /timeline-entries.update
@@ -61,6 +64,7 @@ service:
         name: updateTimelineRequest
         body: timeline-entries-update-request
       response: timeline-entries-update-response
+      display-name: Update timeline entry 
 
 types:
   timeline-entries-create-request:
