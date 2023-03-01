@@ -7,43 +7,47 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    webhooksCreate:
+    create:
       path: /webhooks.create
       method: POST
       docs: Creates a new webhook target.
       request:
+        name: createWebhookRequest
         body: webhooks-create-request
 
-    webhooksDelete:
+    delete:
       path: /webhooks.delete
       method: POST
       docs: Deletes the requested webhook.
       request:
+        name: deleteWebhookRequest
         body: webhooks-delete-request
       response: webhooks-delete-response
 
-    webhooksGet:
+    get:
       path: /webhooks.get
       method: GET
       docs: Gets the requested webhook's information.
       request:
+        name: getWebhookRequest
         query-parameters:
           id:
             docs: ID for the webhook.
             type: string
       response: webhooks-get-response
 
-    webhooksList:
+    list:
       path: /webhooks.list
       method: GET
       docs: Lists the webhooks.
       response: webhooks-list-response
 
-    webhooksUpdate:
+    update:
       path: /webhooks.update
       method: POST
       docs: Updates the requested webhook.
       request:
+        name: updateWebhookRequest
         body: webhooks-update-request
       response: webhooks-update-response
 

@@ -8,39 +8,43 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    tagsCreate:
+    create:
       path: /tags.create
       method: POST
       docs: |
         Creates a new tag, which is used to create associations between objects
         and a logical concept denoted by the tag's name.
       request:
+        name: createTagRequest
         body: tags-create-request
 
-    tagsDelete:
+    delete:
       path: /tags.delete
       method: POST
       docs: Deletes a tag.
       request:
+        name: deleteTagRequest
         body: tags-delete-request
       response: tags-delete-response
 
-    tagsGet:
+    get:
       path: /tags.get
       method: GET
       docs: Gets a tag's information.
       request:
+        name: getTagRequest
         query-parameters:
           id:
             docs: The requested tag's ID.
             type: string
       response: tags-get-response
 
-    tagsList:
+    list:
       path: /tags.list
       method: GET
       docs: Lists the available tags.
       request:
+        name: listTagRequest
         query-parameters:
           cursor:
             docs: >
@@ -58,11 +62,12 @@ service:
             type: optional<__package__.list-mode>
       response: tags-list-response
 
-    tagsUpdate:
+    update:
       path: /tags.update
       method: POST
       docs: Updates a tag's information.
       request:
+        name: updateTagRequest
         body: tags-update-request
       response: tags-update-response
 

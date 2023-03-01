@@ -8,28 +8,31 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    worksCreate:
+    create:
       path: /works.create
       method: POST
       docs: |
         Creates new work ([issue](https://devrev.ai/docs/product/build),
         [ticket](https://devrev.ai/docs/product/support)) item.
       request:
+        name: createWorksRequest
         body: works-create-request
 
-    worksDelete:
+    delete:
       path: /works.delete
       method: POST
       docs: Deletes a work item.
       request:
+        name: deleteWorksRequest
         body: works-delete-request
       response: works-delete-response
 
-    worksExport:
+    export:
       path: /works.export
       method: GET
       docs: Exports a collection of work items.
       request:
+        name: exportWorksRequest
         query-parameters:
           first:
             docs: >
@@ -49,22 +52,24 @@ service:
             type: optional<string>
       response: works-export-response
 
-    worksGet:
+    get:
       path: /works.get
       method: GET
       docs: Gets a work item's information.
       request:
+        name: getWorksRequest
         query-parameters:
           id:
             docs: The work's ID.
             type: string
       response: works-get-response
 
-    worksList:
+    list:
       path: /works.list
       method: GET
       docs: Lists a collection of work items.
       request:
+        name: listWorksRequest
         query-parameters:
           cursor:
             docs: >
@@ -93,11 +98,12 @@ service:
             type: optional<string>
       response: works-list-response
 
-    worksUpdate:
+    update:
       path: /works.update
       method: POST
       docs: Updates a work item's information.
       request:
+        name: updateWorksRequest
         body: works-update-request
       response: works-update-response
 

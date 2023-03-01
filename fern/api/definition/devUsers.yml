@@ -8,11 +8,12 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    devUsersList:
+    list:
       path: /dev-users.list
       method: GET
       docs: Lists users within your organization.
       request:
+        name: listDevUsersRequest
         query-parameters:
           cursor:
             docs: >
@@ -31,7 +32,7 @@ service:
             type: optional<__package__.list-mode>
       response: dev-users-list-response
 
-    devUsersSelf:
+    self:
       path: /dev-users.self
       method: GET
       docs: Gets the authenticated user's information.

@@ -7,7 +7,7 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    devOrgAuthConnectionsCreate:
+    create:
       path: /dev-orgs.auth-connections.create
       method: POST
       docs: |
@@ -19,8 +19,9 @@ service:
         enterprise connections can be created by an organization.
       request:
         body: dev-org-auth-connections-create-request
+        name: createDevOrgRequest
 
-    devOrgAuthConnectionsDelete:
+    delete:
       path: /dev-orgs.auth-connections.delete
       method: POST
       docs: |
@@ -29,19 +30,21 @@ service:
         connections can not be deleted using this method.
       request:
         body: dev-org-auth-connections-delete-request
+        name: deleteDevOrgRequest
 
-    devOrgAuthConnectionsGet:
+    get:
       path: /dev-orgs.auth-connections.get
       method: GET
       docs: Retrieves the details for an authentication connection.
       request:
+        name: retrieveDevOrgRequest
         query-parameters:
           id:
             docs: ID of the authentication connection.
             type: string
       response: dev-org-auth-connections-get-response
 
-    devOrgAuthConnectionsList:
+    list:
       path: /dev-orgs.auth-connections.list
       method: GET
       docs: |
@@ -51,7 +54,7 @@ service:
         created by the user.
       response: dev-org-auth-connections-list-response
 
-    devOrgAuthConnectionsToggle:
+    toggle:
       path: /dev-orgs.auth-connections.toggle
       method: POST
       docs: |
@@ -61,13 +64,15 @@ service:
         is currently enabled for the Dev organization is automatically
         disabled.
       request:
+        name: toggleDevOrgRequest
         body: dev-org-auth-connections-toggle-request
 
-    devOrgAuthConnectionsUpdate:
+    update:
       path: /dev-orgs.auth-connections.update
       method: POST
       docs: Updates an authentication connection.
       request:
+        name: updateDevOrgRequest
         body: dev-org-auth-connections-update-request
 
 types:

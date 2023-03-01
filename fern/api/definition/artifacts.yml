@@ -4,23 +4,24 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    artifactsLocate:
+    locate:
       path: /artifacts.locate
       method: GET
       docs: Gets the download URL for the artifact.
       request:
+        name: locateArtifactsRequest
         query-parameters:
           id:
             docs: The ID of the artifact to get the URL for.
             type: string
       response: artifacts-locate-response
-
-    artifactsPrepare:
+    prepare:
       path: /artifacts.prepare
       method: POST
       docs: |
         Creates an artifact and generates an upload URL for its data.
       request:
+        name: prepareArtifactsRequest
         body: artifacts-prepare-request
       response: artifacts-prepare-response
 
