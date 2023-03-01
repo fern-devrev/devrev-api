@@ -12,6 +12,7 @@ service:
       method: POST
       docs: Creates new [part](https://devrev.ai/docs/product/parts).
       request: parts-create-request
+      display-name: Create new part
 
     delete:
       path: /parts.delete
@@ -19,6 +20,7 @@ service:
       docs: Deletes a [part](https://devrev.ai/docs/product/parts).
       request: parts-delete-request
       response: parts-delete-response
+      display-name: Delete new part
 
     get:
       path: /parts.get
@@ -32,6 +34,7 @@ service:
             docs: The ID of the part to retrieve.
             type: string
       response: parts-get-response
+      display-name: Get a part
 
     list:
       path: /parts.list
@@ -57,6 +60,7 @@ service:
               used.
             type: optional<commons.list-mode>
       response: parts-list-response
+      display-name: Lists collection of parts
 
     update:
       path: /parts.update
@@ -65,6 +69,7 @@ service:
         Updates a [part's](https://devrev.ai/docs/product/parts) information.
       request: parts-update-request
       response: parts-update-response
+      display-name: Update a part
 
 types:
   parts-create-request:

@@ -14,6 +14,7 @@ service:
         Creates a Rev organization in the authenticated user's Dev
         organization.
       request: rev-orgs-create-request
+      display-name: Create Rev organization
 
     delete:
       path: /rev-orgs.delete
@@ -21,6 +22,7 @@ service:
       docs: Deletes the Rev organization.
       request: rev-orgs-delete-request
       response: rev-orgs-delete-response
+      display-name: Delete Rev organization
 
     get:
       path: /rev-orgs.get
@@ -33,6 +35,7 @@ service:
             docs: The ID of the required Rev organization.
             type: string
       response: rev-orgs-get-response
+      display-name: Get Rev organization information
 
     list:
       path: /rev-orgs.list
@@ -80,6 +83,7 @@ service:
               (inclusive).
             type: optional<string>
       response: rev-orgs-list-response
+      display-name: Get list of Rev organizations' information
 
     update:
       path: /rev-orgs.update
@@ -87,6 +91,7 @@ service:
       docs: Updates the Rev organization's information.
       request: rev-orgs-update-request
       response: rev-orgs-update-response
+      display-name: Update the Rev organization's information.
 
 types:
   rev-orgs-create-request:

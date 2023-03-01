@@ -14,6 +14,7 @@ service:
         Creates a new tag, which is used to create associations between objects
         and a logical concept denoted by the tag's name.
       request: tags-create-request
+      display-name: Create new tag
 
     delete:
       path: /tags.delete
@@ -21,6 +22,7 @@ service:
       docs: Deletes a tag.
       request: tags-delete-request
       response: tags-delete-response
+      display-name: Delete a tag
 
     get:
       path: /tags.get
@@ -33,6 +35,7 @@ service:
             docs: The requested tag's ID.
             type: string
       response: tags-get-response
+      display-name: Get a tag
 
     list:
       path: /tags.list
@@ -56,6 +59,7 @@ service:
               used.
             type: optional<commons.list-mode>
       response: tags-list-response
+      display-name: List all available tags
 
     update:
       path: /tags.update
@@ -63,6 +67,7 @@ service:
       docs: Updates a tag's information.
       request: tags-update-request
       response: tags-update-response
+      display-name: Update a tag
 
 types:
   tags-create-request:

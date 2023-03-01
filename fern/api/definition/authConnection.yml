@@ -20,6 +20,7 @@ service:
       request:
         body: dev-org-auth-connections-create-request
         name: createDevOrgRequest
+      display-name: Create new authentication connection
 
     delete:
       path: /dev-orgs.auth-connections.delete
@@ -31,6 +32,7 @@ service:
       request:
         body: dev-org-auth-connections-delete-request
         name: deleteDevOrgRequest
+      display-name: Delete authentication connection
 
     get:
       path: /dev-orgs.auth-connections.get
@@ -43,7 +45,7 @@ service:
             docs: ID of the authentication connection.
             type: string
       response: dev-org-auth-connections-get-response
-
+      display-name: Retrieve details for an authentication connection
     list:
       path: /dev-orgs.auth-connections.list
       method: GET
@@ -53,6 +55,7 @@ service:
         connections which are either available by default or are explicitly
         created by the user.
       response: dev-org-auth-connections-list-response
+      display-name: List authentication connections
 
     toggle:
       path: /dev-orgs.auth-connections.toggle
@@ -66,6 +69,7 @@ service:
       request:
         name: toggleDevOrgRequest
         body: dev-org-auth-connections-toggle-request
+      display-name: Enable or disable authentication connection
 
     update:
       path: /dev-orgs.auth-connections.update
@@ -74,7 +78,8 @@ service:
       request:
         name: updateDevOrgRequest
         body: dev-org-auth-connections-update-request
-
+      display-name: Update authentication connection
+      
 types:
   dev-org-auth-connections-create-request:
     docs: |
