@@ -7,31 +7,34 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    authTokensCreate:
+    create:
       path: /auth-tokens.create
       method: POST
       docs: |
         Creates a JWT corresponding to the requested token type for the
         authenticated user.
       request:
+        name: createAuthTokenRequest
         body: auth-tokens-create-request
 
-    authTokensDelete:
+    delete:
       path: /auth-tokens.delete
       method: POST
       docs: |
         Revokes the token that matches the given token ID issued under the
         given Dev organization.
       request:
+        name: revokeAuthTokenRequest
         body: auth-tokens-delete-request
 
-    authTokensGet:
+    get:
       path: /auth-tokens.get
       method: GET
       docs: |
         Gets the token metadata corresponding to the given token ID under the
         given Dev organization.
       request:
+        name: getAuthTokenRequest
         query-parameters:
           token_id:
             docs: |
@@ -39,13 +42,14 @@ service:
             type: string
       response: auth-tokens-get-response
 
-    authTokensList:
+    list:
       path: /auth-tokens.list
       method: GET
       docs: |
         Gets the token metadata for all the tokens corresponding to the given
         token type issued for a given subject.
       request:
+        name: listAuthTokenRequest
         query-parameters:
           client_id:
             docs: |
@@ -65,22 +69,24 @@ service:
             type: optional<string>
       response: auth-tokens-list-response
 
-    authTokensSelfDelete:
+    selfDelete:
       path: /auth-tokens.self.delete
       method: POST
       docs: |
         Revokes all the tokens that matches the given token type created by the
         authenticated user.
       request:
+        name: deleteSelfAuthTokenRequest
         body: auth-tokens-self-delete-request
 
-    authTokensUpdate:
+    update:
       path: /auth-tokens.update
       method: POST
       docs: |
         Updates token metadata of a token issued under a given Dev
         organization.
       request:
+        name: updateAuthTokenRequest
         body: auth-tokens-update-request
       response: auth-tokens-update-response
 

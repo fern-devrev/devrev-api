@@ -8,35 +8,38 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    revOrgsCreate:
+    create:
       path: /rev-orgs.create
       method: POST
       docs: |
         Creates a Rev organization in the authenticated user's Dev
         organization.
       request:
+        name: createRevOrgRequest
         body: rev-orgs-create-request
 
-    revOrgsDelete:
+    delete:
       path: /rev-orgs.delete
       method: POST
       docs: Deletes the Rev organization.
       request:
+        name: deleteRevOrgRequest
         body: rev-orgs-delete-request
       response: rev-orgs-delete-response
 
-    revOrgsGet:
+    get:
       path: /rev-orgs.get
       method: GET
       docs: Retrieves the Rev organization's information.
       request:
+        name: getRevOrgRequest
         query-parameters:
           id:
             docs: The ID of the required Rev organization.
             type: string
       response: rev-orgs-get-response
 
-    revOrgsList:
+    list:
       path: /rev-orgs.list
       method: GET
       docs: |
@@ -44,6 +47,7 @@ service:
         authenticated user's Dev Organization which the user is also authorized
         to access.
       request:
+        name: listRevOrgRequest
         query-parameters:
           created_date.after:
             docs: >
@@ -82,11 +86,12 @@ service:
             type: optional<string>
       response: rev-orgs-list-response
 
-    revOrgsUpdate:
+    update:
       path: /rev-orgs.update
       method: POST
       docs: Updates the Rev organization's information.
       request:
+        name: updateRevOrgRequest
         body: rev-orgs-update-request
       response: rev-orgs-update-response
 

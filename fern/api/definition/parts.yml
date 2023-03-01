@@ -8,39 +8,43 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    partsCreate:
+    create:
       path: /parts.create
       method: POST
       docs: Creates new [part](https://devrev.ai/docs/product/parts).
       request:
+        name: createPartsRequest
         body: parts-create-request
 
-    partsDelete:
+    delete:
       path: /parts.delete
       method: POST
       docs: Deletes a [part](https://devrev.ai/docs/product/parts).
       request:
+        name: deletePartsRequest
         body: parts-delete-request
       response: parts-delete-response
 
-    partsGet:
+    get:
       path: /parts.get
       method: GET
       docs: |
         Gets a [part's](https://devrev.ai/docs/product/parts) information.
       request:
+        name: getPartsRequest
         query-parameters:
           id:
             docs: The ID of the part to retrieve.
             type: string
       response: parts-get-response
 
-    partsList:
+    list:
       path: /parts.list
       method: GET
       docs: |
         Lists a collection of [parts](https://devrev.ai/docs/product/parts).
       request:
+        name: listPartsRequest
         query-parameters:
           cursor:
             docs: >
@@ -59,12 +63,13 @@ service:
             type: optional<__package__.list-mode>
       response: parts-list-response
 
-    partsUpdate:
+    update:
       path: /parts.update
       method: POST
       docs: |
         Updates a [part's](https://devrev.ai/docs/product/parts) information.
       request:
+        name: updatePartsRequest
         body: parts-update-request
       response: parts-update-response
 

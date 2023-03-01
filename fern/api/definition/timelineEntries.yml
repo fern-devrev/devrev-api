@@ -8,29 +8,32 @@ service:
   auth: true
   base-path: ""
   endpoints:
-    timelineEntriesCreate:
+    create:
       path: /timeline-entries.create
       method: POST
       docs: Creates a new entry on an object's timeline.
       request:
+        name: createTimelineRequest
         body: timeline-entries-create-request
 
-    timelineEntriesGet:
+    get:
       path: /timeline-entries.get
       method: GET
       docs: Gets an entry on an object's timeline.
       request:
+        name: getTimelineRequest
         query-parameters:
           id:
             docs: The ID of the timeline entry to get.
             type: string
       response: timeline-entries-get-response
 
-    timelineEntriesList:
+    list:
       path: /timeline-entries.list
       method: GET
       docs: Lists the timeline entries for an object.
       request:
+        name: listTimelineRequest
         query-parameters:
           object:
             docs: The ID of the object to list timeline entries for.
@@ -53,11 +56,12 @@ service:
             type: optional<__package__.list-mode>
       response: timeline-entries-list-response
 
-    timelineEntriesUpdate:
+    update:
       path: /timeline-entries.update
       method: POST
       docs: Updates an entry on an object's timeline.
       request:
+        name: updateTimelineRequest
         body: timeline-entries-update-request
       response: timeline-entries-update-response
 
