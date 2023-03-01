@@ -1,0 +1,126 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    create:
+      path: /timeline-entries.create
+      method: POST
+      docs: Creates a new entry on an object's timeline.
+      request: timeline-entries-create-request
+
+    get:
+      path: /timeline-entries.get
+      method: GET
+      docs: Gets an entry on an object's timeline.
+      request:
+        name: getTimelineRequest
+        query-parameters:
+          id:
+            docs: The ID of the timeline entry to get.
+            type: string
+      response: timeline-entries-get-response
+
+    list:
+      path: /timeline-entries.list
+      method: GET
+      docs: Lists the timeline entries for an object.
+      request:
+        name: timeline-entries-list-request
+        query-parameters:
+          object:
+            docs: The ID of the object to list timeline entries for.
+            type: string
+          cursor:
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+              starts from the beginning.
+            type: optional<string>
+          limit:
+            docs: |
+              The maximum number of entries to return. If not set, then this
+              defaults to `50`.
+            type: optional<integer>
+          mode:
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+            type: optional<commons.list-mode>
+      response: timeline-entries-list-response
+
+    update:
+      path: /timeline-entries.update
+      method: POST
+      docs: Updates an entry on an object's timeline.
+      request:
+        name: updateTimelineRequest
+        body: timeline-entries-update-request
+      response: timeline-entries-update-response
+
+types:
+  timeline-entries-create-request:
+    docs: The request to create a timeline entry for an object.
+    properties:
+      object:
+        docs: The ID of the object to create the timeline entry for.
+        type: string
+      type: commons.timeline-entries-create-request-type
+
+  timeline-entries-create-response:
+    docs: The response to creating a timeline entry for an object.
+    properties:
+      timeline_entry: commons.timeline-entry
+
+  timeline-entries-get-response:
+    docs: The request to getting a timeline entry.
+    properties:
+      timeline_entry: commons.timeline-entry
+
+  timeline-entries-list-response:
+    docs: The response to listing timeline entries for an object.
+    properties:
+      next_cursor:
+        docs: |
+          The cursor used to iterate subsequent results in accordance to the
+          sort order. If not set, then no later elements exist.
+        type: optional<string>
+      prev_cursor:
+        docs: |
+          The cursor used to iterate preceding results in accordance to the
+          sort order. If not set, then no prior elements exist.
+        type: optional<string>
+      timeline_entries:
+        docs: The timeline entries for the object.
+        type: list<commons.timeline-entry>
+
+  timeline-entries-update-request:
+    docs: The request to update a timeline entry.
+    properties:
+      id:
+        docs: The ID of the timeline entry to update.
+        type: string
+      type: timeline-entries-update-request-type
+
+  timeline-entries-update-response:
+    docs: The response to updating a timeline entry.
+    properties:
+      timeline_entry: commons.timeline-entry
+
+  timeline-entries-update-request-type:
+    enum:
+      - timeline_comment
+
+  timeline-entries-update-request-timeline-comment:
+    properties:
+      body:
+        docs: The updated comment's body.
+        type: optional<string>
+      body_type: optional<commons.timeline-comment-body-type>
+      snap_kit_body:
+        docs: The SnapKit body of the comment.
+        type: optional<map<string, unknown>>

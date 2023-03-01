@@ -1,0 +1,148 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    create:
+      path: /tags.create
+      method: POST
+      docs: |
+        Creates a new tag, which is used to create associations between objects
+        and a logical concept denoted by the tag's name.
+      request: tags-create-request
+
+    delete:
+      path: /tags.delete
+      method: POST
+      docs: Deletes a tag.
+      request: tags-delete-request
+      response: tags-delete-response
+
+    get:
+      path: /tags.get
+      method: GET
+      docs: Gets a tag's information.
+      request:
+        name: tags-get-request
+        query-parameters:
+          id:
+            docs: The requested tag's ID.
+            type: string
+      response: tags-get-response
+
+    list:
+      path: /tags.list
+      method: GET
+      docs: Lists the available tags.
+      request:
+        name: tags-list-request
+        query-parameters:
+          cursor:
+            docs: >
+              The cursor to resume iteration from. If not provided, then
+              iteration
+              starts from the beginning.
+            type: optional<string>
+          limit:
+            docs: The maximum number of tags to return. The default is '50'.
+            type: optional<integer>
+          mode:
+            docs: |
+              The iteration mode to use, otherwise if not set, then "after" is
+              used.
+            type: optional<commons.list-mode>
+      response: tags-list-response
+
+    update:
+      path: /tags.update
+      method: POST
+      docs: Updates a tag's information.
+      request: tags-update-request
+      response: tags-update-response
+
+types:
+  tags-create-request:
+    docs: The request to create a new tag.
+    properties:
+      allowed_values:
+        docs: |
+          The allowed values for the tag, or empty if no values are
+          permitted.
+        type: optional<list<string>>
+      description:
+        docs: The description for the tag.
+        type: optional<string>
+      name:
+        docs: |
+          The name for the tag, which must be unique across all tags.
+        type: string
+
+  tags-create-response:
+    docs: The response to creating a new tag.
+    properties:
+      tag: commons.tag
+
+  tags-delete-request:
+    docs: The request to delete a tag.
+    properties:
+      id:
+        docs: The ID of the tag to delete.
+        type: string
+
+  tags-delete-response:
+    docs: The response for deleting a tag.
+    type: map<string, unknown>
+
+  tags-get-response:
+    docs: The response to getting a tag's information.
+    properties:
+      tag: commons.tag
+
+  tags-list-response:
+    docs: The response to listing the tags.
+    properties:
+      next_cursor:
+        docs: |
+          The cursor used to iterate subsequent results in accordance to the
+          sort order. If not set, then no later elements exist.
+        type: optional<string>
+      prev_cursor:
+        docs: |
+          The cursor used to iterate preceding results in accordance to the
+          sort order. If not set, then no prior elements exist.
+        type: optional<string>
+      tags:
+        docs: The list of tags.
+        type: list<commons.tag>
+
+  tags-update-request:
+    docs: The request to update a tag.
+    properties:
+      allowed_values: optional<tags-update-allowed-values>
+      description:
+        docs: The updated description of the tag.
+        type: optional<string>
+      id:
+        docs: The ID of the tag to update.
+        type: string
+      name:
+        docs: |
+          The updated name of the tag. The name must be unique across all
+          tags.
+        type: optional<string>
+
+  tags-update-response:
+    docs: The response for updating a tag.
+    properties:
+      tag: commons.tag
+
+  tags-update-allowed-values:
+    docs: Specifies an update to a tag's allowed values.
+    properties:
+      set:
+        docs: Sets the allowed values for the tag.
+        type: optional<list<string>>

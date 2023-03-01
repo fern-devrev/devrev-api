@@ -1,6 +1,8 @@
 name: api
-auth: bearer
-environments:
-  Production: https://api.example.com
-  Sandbox: https://sandbox.example.com
-default-environment: Production
+display-name: DevRev API
+auth: apiKey
+auth-schemes:
+  apiKey:
+    header: Authorization
+error-discrimination:
+  strategy: status-code

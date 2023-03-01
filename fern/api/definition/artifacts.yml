@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    locate:
+      path: /artifacts.locate
+      method: GET
+      docs: Gets the download URL for the artifact.
+      request:
+        name: locate-artifacts-request
+        query-parameters:
+          id:
+            docs: The ID of the artifact to get the URL for.
+            type: string
+      response: artifacts-locate-response
+    prepare:
+      path: /artifacts.prepare
+      method: POST
+      docs: |
+        Creates an artifact and generates an upload URL for its data.
+      request: artifacts-prepare-request
+      response: artifacts-prepare-response
+
+types:
+  artifacts-locate-response:
+    docs: The response to getting an artifact's download URL.
+    properties:
+      expires_at:
+        docs: The expiration timestamp of the URL.
+        type: optional<string>
+      url:
+        docs: The artifact's download URL.
+        type: string
+
+  artifacts-prepare-request:
+    docs: The request to prepare a URL to upload a file.
+    properties:
+      file_name:
+        docs: The name of the file that's being uploaded.
+        type: string
+
+  artifacts-prepare-response:
+    docs: The response to preparing a URL to upload a file.
+    properties:
+      form_data:
+        docs: The POST policy form data.
+        type: list<artifacts-prepare-response-form-data>
+      id:
+        docs: The generated artifact's ID.
+        type: string
+      url:
+        docs: The URL that the file's data should be uploaded to.
+        type: string
+
+  artifacts-prepare-response-form-data:
+    properties:
+      key:
+        docs: Key of the form field.
+        type: string
+      value:
+        docs: Value corresponding to the key.
+        type: string

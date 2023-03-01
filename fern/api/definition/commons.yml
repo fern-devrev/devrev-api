@@ -1,4 +1,738 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
-  id: string
+  auth-token-grant-type:
+    docs: Specifies the process of obtaining a token.
+    enum:
+      - value: urn:devrev:params:oauth:grant-type:token-issue
+        name: token_issue
+      - value: urn:ietf:params:oauth:grant-type:token-exchange
+        name: token_exchange
+
+  auth-token-requested-token-type:
+    docs: The type of the requested token.
+    enum:
+      - value: urn:devrev:params:oauth:token-type:aat
+        name: token_type_aat
+      - value: urn:devrev:params:oauth:token-type:aat:public
+        name: token_type_public
+      - value: urn:devrev:params:oauth:token-type:dev
+        name: token_type_dev
+      - value: urn:devrev:params:oauth:token-type:pat
+        name: token_type_pat
+      - value: urn:devrev:params:oauth:token-type:rev
+        name: token_type_rev
+      - value: urn:devrev:params:oauth:token-type:session
+        name: token_type_session
+      - value: urn:devrev:params:oauth:token-type:session:dev0
+        name: token_type_dev0
+      - value: urn:devrev:params:oauth:token-type:sys
+        name: token_type_sys
+      - value: urn:ietf:params:oauth:token-type:jwt
+        name: token_type_jwt
+
+  auth-tokens-rev-info:
+    docs: |
+      Carries info corresponding to the Rev user to be provisioned and/or
+      issue a Rev session token.
+    properties:
+      org_ref:
+        docs: An identifier which uniquely identifies a Rev org.
+        type: optional<string>
+      org_traits: optional<auth-tokens-org-traits>
+      user_ref:
+        docs: An identifier which uniquely identifies a Rev user.
+        type: string
+      user_traits: optional<auth-tokens-user-traits>
+
+  auth-tokens-org-traits:
+    docs: Carries Rev org info.
+    properties:
+      display_name:
+        docs: The display name of the Rev org.
+        type: optional<string>
+      domain:
+        docs: The domain of the Rev org.
+        type: optional<string>
+
+  auth-tokens-user-traits:
+    docs: Carries Rev user info.
+    properties:
+      display_name:
+        docs: The display name of the Rev user.
+        type: optional<string>
+      email:
+        docs: The email address of the Rev user.
+        type: optional<string>
+      full_name:
+        docs: The full name of the Rev user.
+        type: optional<string>
+
+  auth-token-subject-token-type:
+    docs: The type of the subject token.
+    enum:
+      - value: urn:devrev:params:oauth:token-type:jwt:auth0
+        name: token_type_jwt_auth0
+      - value: urn:devrev:params:oauth:token-type:jwt:dev
+        name: token_type_jwt_revinfo
+      - value: urn:devrev:params:oauth:token-type:revinfo
+        name: token_type_revinfo
+      - value: urn:devrev:params:oauth:token-type:sysu
+        name: token_type_sysu
+      - value: urn:devrev:params:oauth:token-type:userinfo
+        name: token_type_userinfo
+      - value: urn:devrev:params:oauth:token-type:userinfo:profile
+        name: token_type_userinfo_profile
+      - value: urn:ietf:params:oauth:token-type:jwt
+        name: token_type_jwt
+
+  auth-token-token-type:
+    docs: |
+      The type of the issued token. Bearer is the only supported token type.
+    enum:
+      - bearer
+
+  auth-token:
+    extends:
+      - atom-base
+    properties:
+      client_id:
+        docs: |
+          An identifier that represents the application that requested the
+          token. Only applicable for application access tokens.
+        type: optional<string>
+      expires_at:
+        docs: The time at which the token expires.
+        type: optional<string>
+      issued_at:
+        docs: The time at which the token was issued.
+        type: optional<string>
+      requested_token_type: optional<auth-token-requested-token-type>
+      scopes:
+        docs: The scopes associated with the issued token.
+        type: optional<list<string>>
+      status: optional<auth-token-status>
+      subject:
+        docs: The subject of the token.
+        type: optional<string>
+      token_hint:
+        docs: A hint that identifies the token.
+        type: optional<string>
+
+  atom-base:
+    properties:
+      created_by: optional<user-summary>
+      created_date:
+        docs: Timestamp when the object was created.
+        type: optional<string>
+      display_id:
+        docs: Human-readable object ID unique to the Dev organization.
+        type: optional<string>
+      id:
+        docs: Globally unique object ID.
+        type: string
+      modified_by: optional<user-summary>
+      modified_date:
+        docs: Timestamp when the object was last modified.
+        type: optional<string>
+
+  user-summary:
+    properties:
+      type: user-type
+
+  user-type:
+    enum:
+      - dev_user
+      - rev_user
+      - sys_user
+
+  dev-user-summary:
+    extends:
+      - user-base-summary
+
+  user-base-summary:
+    extends:
+      - atom-base-summary
+    properties:
+      display_name:
+        docs: |
+          The user's display name. The name is non-unique and mutable.
+        type: optional<string>
+      email:
+        docs: Email address of the user.
+        type: optional<string>
+      full_name:
+        docs: Full name of the user.
+        type: optional<string>
+      profile_picture:
+        docs: URL of the user's profile picture.
+        type: optional<string>
+      state: optional<user-state>
+
+  atom-base-summary:
+    properties:
+      display_id:
+        docs: Human-readable object ID unique to the Dev organization.
+        type: optional<string>
+      id:
+        docs: Globally unique object ID.
+        type: string
+
+  user-state:
+    docs: State of the user.
+    enum:
+      - active
+      - deactivated
+      - locked
+      - shadow
+      - unassigned
+
+  rev-user-summary:
+    extends:
+      - user-base-summary
+    properties:
+      rev_org: optional<org-summary>
+
+  org-summary:
+    properties:
+      type: org-type
+
+  org-type:
+    enum:
+      - rev_org
+
+  rev-org-summary:
+    extends:
+      - org-base-summary
+
+  org-base-summary:
+    extends:
+      - atom-base-summary
+    properties:
+      display_name:
+        docs: Name of the Organization.
+        type: optional<string>
+
+  sys-user-summary:
+    extends:
+      - user-base-summary
+
+  auth-token-status:
+    docs: The status of the token.
+    enum:
+      - active
+      - expired
+      - revoked
+
+  dev-org-auth-connections-create-request-type:
+    docs: |
+      Defines the type for the authentication connection. Different types of
+      authentication connections have different configuration parameters.
+    enum:
+      - google_apps
+      - oidc
+      - samlp
+      - waad
+
+  auth-connection-options-azure-ad:
+    docs: |
+      Object encapsulating the configuration parameters for an Azure AD
+      authentication connection.
+    properties:
+      client_id:
+        docs: Client ID for the Azure authentication connection.
+        type: optional<string>
+      client_secret:
+        docs: Client secret for the Azure authentication connection.
+        type: optional<string>
+      domain:
+        docs: Domain URL of the Azure authentication connection.
+        type: optional<string>
+
+  auth-connection-options-google-apps:
+    docs: |
+      Object encapsulating the configuration parameters for a Google Apps
+      authentication connection.
+    properties:
+      client_id:
+        docs: Client ID for the Google Apps authentication connection.
+        type: optional<string>
+      client_secret:
+        docs: |
+          Client secret for the Google Apps authentication connection.
+        type: optional<string>
+      tenant_domain:
+        docs: |
+          Tenant domain URL of the Google Apps authentication connection.
+        type: optional<string>
+
+  auth-connection-options-oidc:
+    docs: |
+      Object encapsulating the configuration parameters for an OIDC
+      authentication connection.
+    properties:
+      client_id:
+        docs: Client ID for the OIDC authentication connection.
+        type: optional<string>
+      client_secret:
+        docs: Client secret for the OIDC authentication connection.
+        type: optional<string>
+      issuer:
+        docs: Issuer URL of the OIDC authentication connection.
+        type: optional<string>
+
+  auth-connection-options-saml:
+    docs: |
+      Object encapsulating the configuration parameters for a SAML
+      authentication connection.
+    properties:
+      sign_in_endpoint:
+        docs: Sign In endpoint for the SAML authentication connection.
+        type: optional<string>
+      signing_cert:
+        docs: |
+          Signing certificate for the SAML authentication connection.
+        type: optional<string>
+
+  auth-connection:
+    docs: |
+      Connection object that specifies the configuration for an
+      authentication connection that is set up for a Dev organization.
+    properties:
+      display_name:
+        docs: |
+          Display name of the authentication connection. This name will be
+          visible to all the users when they sign in to this Dev
+          organization. For example, if the display_name is 'abclogin', then
+          it would appear on the login button as 'Log in to abclogin'.
+        type: optional<string>
+      enabled:
+        docs: |
+          Whether the authentication connection is enabled or disabled. If
+          set to false, the authentication connection will not show up on the
+          login screen as a login option.
+        type: optional<boolean>
+      id:
+        docs: ID of the authentication connection.
+        type: string
+      type: auth-connection-type
+
+  auth-connection-type:
+    docs: |
+      Defines the type for the authentication connection. The configuration
+      for each authentication connection will depend on the type value.
+    enum:
+      - google_apps
+      - oidc
+      - samlp
+      - social
+      - waad
+
+  auth-connection-options-social: map<string, unknown>
+
+  auth-connection-toggle:
+    enum:
+      - disable
+      - enable
+
+  dev-user:
+    extends:
+      - user-base
+    properties:
+      external_identities:
+        docs: IDs of the Dev User outside the DevRev SOR.
+        type: optional<list<external-identity>>
+
+  user-base:
+    extends:
+      - atom-base
+    properties:
+      display_name:
+        docs: |
+          The user's display name. The name is non-unique and mutable.
+        type: optional<string>
+      email:
+        docs: Email address of the user.
+        type: optional<string>
+      full_name:
+        docs: Full name of the user.
+        type: optional<string>
+      phone_numbers:
+        docs: Phone numbers of the user.
+        type: optional<list<string>>
+      profile_picture:
+        docs: URL of the user's profile picture.
+        type: optional<string>
+      state: optional<user-state>
+
+  external-identity:
+    docs: External identity of a user.
+    type: map<string, unknown>
+
+  part-type:
+    enum:
+      - product
+
+  parts-create-request-capability: map<string, unknown>
+
+  parts-create-request-feature: map<string, unknown>
+
+  parts-create-request-product: map<string, unknown>
+
+  part:
+    properties:
+      type: part-type
+
+  product:
+    extends:
+      - part-base
+
+  part-base:
+    extends:
+      - atom-base
+    properties:
+      artifacts:
+        docs: The attached artifacts.
+        type: optional<list<artifact-summary>>
+      description:
+        docs: Description of the part.
+        type: optional<string>
+      name:
+        docs: Name of the part.
+        type: optional<string>
+      owned_by:
+        docs: The users that own the part.
+        type: list<user-summary>
+      stage: optional<stage>
+      tags:
+        docs: Tags associated with the object.
+        type: optional<list<tag-with-value>>
+
+  artifact-summary:
+    extends:
+      - atom-base-summary
+
+  stage:
+    docs: Describes the current stage of a work item.
+    properties:
+      name:
+        docs: Current stage name of the work item.
+        type: string
+
+  tag-with-value:
+    properties:
+      tag: tag-summary
+      value:
+        docs: The value for the object's association with the tag.
+        type: optional<string>
+
+  tag-summary:
+    extends:
+      - atom-base-summary
+    properties:
+      name:
+        docs: |
+          The name of the tag, which denotes the logical concept by which all
+          tagged objects will be associated. The name is guaranteed to be
+          unique.
+        type: string
+
+  org-environment:
+    docs: |
+      The environment of the Org. Defaults to 'production' if not specified.
+    enum:
+      - production
+      - staging
+      - test
+
+  rev-org:
+    extends:
+      - org-base
+    properties:
+      description:
+        docs: Description of the Rev organization.
+        type: optional<string>
+      domain:
+        docs: Company's domain name. Example - 'devrev.ai'.
+        type: optional<string>
+      external_ref:
+        docs: |
+          External ref is a unique identifier for the Rev (customer)
+          organization from your primary customer system of records. If none
+          is specified, a system-generated identifier will be assigned to the
+          organization.
+        type: optional<string>
+
+  org-base:
+    extends:
+      - atom-base
+    properties:
+      display_name:
+        docs: Name of the Organization.
+        type: optional<string>
+
+  tag:
+    extends:
+      - atom-base
+    properties:
+      allowed_values:
+        docs: |
+          The allowed values for the tag, where a value is provided when a
+          tag is associated with an object. If empty, then no value should be
+          provided when the association is made.
+        type: optional<list<string>>
+      description:
+        docs: |
+          An informative description for the tag that should provide context
+          on the tag's purpose and usage.
+        type: optional<string>
+      name:
+        docs: |
+          The name of the tag, which denotes the logical concept by which all
+          tagged objects will be associated. The name is guaranteed to be
+          unique.
+        type: string
+
+  timeline-entries-create-request-type:
+    enum:
+      - timeline_comment
+
+  timeline-entries-create-request-timeline-comment:
+    properties:
+      body:
+        docs: The comment's body.
+        type: optional<string>
+      body_type: optional<timeline-comment-body-type>
+      snap_kit_body:
+        docs: The SnapKit body of the comment.
+        type: optional<map<string, unknown>>
+
+  timeline-comment-body-type:
+    docs: The type of the body to use for the comment.
+    enum:
+      - snap_kit
+      - text
+
+  timeline-entry:
+    properties:
+      type: timeline-entry-type
+
+  timeline-entry-type:
+    enum:
+      - timeline_comment
+
+  timeline-comment:
+    extends:
+      - timeline-entry-base
+    properties:
+      body:
+        docs: |
+          The comment's body. If the comment has been deleted, then no body
+          will appear in the response.
+        type: optional<string>
+      body_type: optional<timeline-comment-body-type>
+      snap_kit_body:
+        docs: The SnapKit Body of the comment.
+        type: optional<map<string, unknown>>
+
+  timeline-entry-base:
+    extends:
+      - atom-base
+
+  webhook-event-type:
+    docs: The event types that the webhook will receive.
+    enum:
+      - part_created
+      - part_deleted
+      - part_updated
+      - rev_org_created
+      - rev_org_deleted
+      - rev_org_updated
+      - tag_created
+      - tag_deleted
+      - tag_updated
+      - timeline_entry_created
+      - timeline_entry_deleted
+      - timeline_entry_updated
+      - verify
+      - work_created
+      - work_deleted
+      - work_updated
+
+  webhook:
+    extends:
+      - atom-base
+    properties:
+      event_types:
+        docs: The event types that the webhook will receive.
+        type: optional<list<webhook-event-type>>
+      secret:
+        docs: The secret to use for verifying webhook events.
+        type: string
+      status: webhook-status
+      url:
+        docs: The URL of the webhook endpoint.
+        type: string
+
+  webhook-status:
+    docs: The status of the webhook.
+    enum:
+      - active
+      - inactive
+      - unverified
+
+  stage-init:
+    docs: Sets an object's initial stage.
+    properties:
+      name:
+        docs: The name of the stage.
+        type: string
+
+  set-tag-with-value:
+    properties:
+      id:
+        docs: The ID of the tag.
+        type: string
+      value:
+        docs: |
+          The value for the object's association with the tag. If specified,
+          the value must be one that's specified in the tag's allowed values.
+        type: optional<string>
+
+  work-type:
+    enum:
+      - issue
+      - ticket
+
+  works-create-request-issue:
+    properties:
+      priority: optional<issue-priority>
+
+  issue-priority:
+    docs: Priority of the work based upon impact and criticality.
+    enum:
+      - p0
+      - p1
+      - p2
+      - p3
+
+  works-create-request-ticket:
+    properties:
+      rev_org:
+        docs: The Rev organization that the ticket is associated with.
+        type: optional<string>
+      severity: optional<ticket-severity>
+
+  ticket-severity:
+    docs: Severity of the ticket.
+    enum:
+      - blocker
+      - high
+      - low
+      - medium
+
+  work:
+    properties:
+      type: work-type
+
+  issue:
+    extends:
+      - work-base
+      - _InlinedType13
+
+  _InlinedType13:
+    properties:
+      priority: optional<issue-priority>
+
+  work-base:
+    extends:
+      - atom-base
+    properties:
+      applies_to_part: optional<part-summary>
+      artifacts:
+        docs: The artifacts attached to the work item.
+        type: optional<list<artifact-summary>>
+      body:
+        docs: Body of the work object.
+        type: optional<string>
+      owned_by:
+        docs: The users that own the work.
+        type: list<user-summary>
+      reported_by:
+        docs: Users that reported the work.
+        type: optional<list<user-summary>>
+      stage: optional<stage>
+      tags:
+        docs: Tags associated with the object.
+        type: optional<list<tag-with-value>>
+      target_close_date:
+        docs: Timestamp when the work is expected to be complete.
+        type: optional<string>
+      title:
+        docs: Title of the work object.
+        type: string
+  
+  list-mode:
+    docs: |
+      The iteration mode to use. If "after", then entries after the provided
+      cursor will be returned, or if no cursor is provided, then from the
+      beginning. If "before", then entries before the provided cursor will be
+      returned, or if no cursor is provided, then from the end. Entries will
+      always be returned in the specified sort-by order.
+    enum:
+      - after
+      - before
+
+  part-summary:
+    properties:
+      type: part-type
+
+  product-summary:
+    extends:
+      - part-base-summary
+
+  part-base-summary:
+    extends:
+      - atom-base-summary
+    properties:
+      name:
+        docs: Name of the part.
+        type: optional<string>
+
+  ticket:
+    extends:
+      - work-base
+    properties:
+      rev_org: optional<org-summary>
+      severity: optional<ticket-severity>
+  
+  error-base: 
+    properties: 
+      message:
+        docs: The message associated with the error.
+        type: string
+
+errors: 
+  BadRequestError: 
+    status-code: 400
+    type: error-base
+  
+  UnauthorizedError: 
+    status-code: 401
+    type: error-base
+  
+  ForbiddenError: 
+    status-code: 403
+    type: error-base
+  
+  NotFoundError: 
+    status-code: 404
+    type: error-base
+  
+  TooManyRequestsError: 
+    status-code: 429
+    type: error-base
+  
+  InternalServerError: 
+    status-code: 500
+    type: error-base
