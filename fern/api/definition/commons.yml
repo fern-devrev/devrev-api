@@ -604,33 +604,6 @@ types:
       - issue
       - ticket
 
-  works-create-request-issue:
-    properties:
-      priority: optional<issue-priority>
-
-  issue-priority:
-    docs: Priority of the work based upon impact and criticality.
-    enum:
-      - p0
-      - p1
-      - p2
-      - p3
-
-  works-create-request-ticket:
-    properties:
-      rev_org:
-        docs: The Rev organization that the ticket is associated with.
-        type: optional<string>
-      severity: optional<ticket-severity>
-
-  ticket-severity:
-    docs: Severity of the ticket.
-    enum:
-      - blocker
-      - high
-      - low
-      - medium
-
   work:
     properties:
       type: work-type
@@ -638,11 +611,24 @@ types:
   issue:
     extends:
       - work-base
-      - _InlinedType13
-
-  _InlinedType13:
     properties:
       priority: optional<issue-priority>
+  
+  ticket-severity:
+    docs: Severity of the ticket.
+    enum:
+      - blocker
+      - high
+      - low
+      - medium
+  
+  issue-priority:
+    docs: Priority of the work based upon impact and criticality.
+    enum:
+      - p0
+      - p1
+      - p2
+      - p3
 
   work-base:
     extends:

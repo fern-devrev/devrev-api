@@ -14,6 +14,7 @@ service:
         Creates new work ([issue](https://devrev.ai/docs/product/build),
         [ticket](https://devrev.ai/docs/product/support)) item.
       request: works-create-request
+      response: works-create-response
       display-name: Create new work item
 
     delete:
@@ -107,8 +108,14 @@ service:
       display-name: Update work item
 
 types:
-  works-create-request:
+  works-create-request: 
+    union: 
+      issue: works-create-request-issue
+      ticket: works-create-request-ticket
+
+  works-create-request-issue:
     properties:
+      priority: optional<commons.issue-priority>
       applies_to_part:
         docs: |
           The [part](https://devrev.ai/docs/product/parts) that the work
@@ -138,7 +145,42 @@ types:
       title:
         docs: Title of the work object.
         type: string
-      type: commons.work-type
+
+  works-create-request-ticket:
+    properties:
+      rev_org:
+        docs: The Rev organization that the ticket is associated with.
+        type: optional<string>
+      severity: optional<commons.ticket-severity>
+      applies_to_part:
+        docs: |
+          The [part](https://devrev.ai/docs/product/parts) that the work
+          applies to. Specifying a part is required when creating tickets and
+          issues.
+        type: string
+      artifacts:
+        docs: |
+          The IDs of the artifacts to associate with the work item.
+        type: optional<list<string>>
+      body:
+        docs: Body of the work object.
+        type: optional<string>
+      owned_by:
+        docs: The users that own the work.
+        type: list<string>
+      reported_by:
+        docs: The users that reported the work.
+        type: optional<list<string>>
+      stage: optional<commons.stage-init>
+      tags:
+        docs: Tags associated with the work item.
+        type: optional<list<commons.set-tag-with-value>>
+      target_close_date:
+        docs: Timestamp for when the work is expected to be complete.
+        type: optional<string>
+      title:
+        docs: Title of the work object.
+        type: string
 
   works-create-response:
     properties:
