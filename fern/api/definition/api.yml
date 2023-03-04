@@ -1,3 +1,6 @@
+imports: 
+  commons: commons.yml
+
 name: api
 display-name: DevRev API
 auth: apiKey
@@ -10,3 +13,11 @@ error-discrimination:
 default-environment: Production
 environments: 
   Production: https://api.devrev.ai
+errors: 
+  - commons.bad-request
+  - commons.unauthorized
+  - commons.forbidden
+  - commons.not-found
+  - commons.too-many-requests
+  - commons.internal-server-error
+  - commons.service-unavailable
