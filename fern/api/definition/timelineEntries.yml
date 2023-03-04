@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: APIs to manage timeline entries for objects.
   endpoints:
     create:
       path: /timeline-entries.create

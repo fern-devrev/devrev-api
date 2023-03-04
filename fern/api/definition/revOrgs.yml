@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: Rev organization interactions.
   endpoints:
     create:
       path: /rev-orgs.create

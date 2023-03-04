@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: Webhook event APIs.
   endpoints:
     create:
       path: /webhooks.create

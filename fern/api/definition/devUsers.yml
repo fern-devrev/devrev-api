@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: Dev user interactions.
   endpoints:
     list:
       path: /dev-users.list

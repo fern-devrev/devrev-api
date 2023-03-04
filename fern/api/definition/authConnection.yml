@@ -3,6 +3,7 @@
 service:
   auth: true
   base-path: ""
+  docs: Auth Connections of DevOrg.
   endpoints:
     create:
       path: /dev-orgs.auth-connections.create

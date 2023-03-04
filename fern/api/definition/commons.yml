@@ -144,3 +144,38 @@ types:
           tagged objects will be associated. The name is guaranteed to be
           unique.
         type: string
+  
+  error-base:
+    properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+
+errors: 
+  bad-request: 
+    status-code: 400
+    type: error-base
+  
+  unauthorized: 
+    status-code: 401
+    type: error-base
+  
+  forbidden: 
+    status-code: 403
+    type: error-base
+  
+  not-found:
+    status-code: 404
+    type: error-base
+  
+  too-many-requests: 
+    status-code: 429
+    type: error-base
+  
+  internal-server-error: 
+    status-code: 500
+    type: error-base
+  
+  service-unavailable: 
+    status-code: 503
+    type: error-base

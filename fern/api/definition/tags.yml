@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: DevRev tag interactions.
   endpoints:
     create:
       path: /tags.create

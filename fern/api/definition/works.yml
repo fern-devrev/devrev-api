@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: DevRev work interactions.
   endpoints:
     create:
       path: /works.create

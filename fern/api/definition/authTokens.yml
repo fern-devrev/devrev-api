@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: Security token interactions.
   endpoints:
     create:
       path: /auth-tokens.create

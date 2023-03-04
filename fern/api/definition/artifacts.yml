@@ -3,6 +3,7 @@
 service:
   auth: true
   base-path: ""
+  docs: Artifact (file) management APIs.
   endpoints:
     locate:
       path: /artifacts.locate
