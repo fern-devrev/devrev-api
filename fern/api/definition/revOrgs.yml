@@ -45,6 +45,10 @@ service:
       request:
         name: rev-orgs-list-request
         query-parameters:
+          created_by: 
+            docs: Filters by creator.
+            type: optional<string>
+            allow-multiple: true
           created_date.after:
             docs: >
               Filters for objects created after the provided timestamp
@@ -80,6 +84,12 @@ service:
               Filters for objects created before the provided timestamp
               (inclusive).
             type: optional<string>
+          sort_by: 
+            docs: |
+              Fields to sort the Rev organizations by and the direction to sort
+              them.
+            type: optional<string>
+            allow-multiple: true
       response: rev-orgs-list-response
 
     update:

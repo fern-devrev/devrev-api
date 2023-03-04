@@ -30,12 +30,37 @@ service:
       request:
         name: works-export-request
         query-parameters:
+          applies_to_part: 
+            docs: > 
+              Filters for work belonging to any of the provided parts.
+            type: optional<string>
+            allow-multiple: true
+          created_by: 
+            docs: > 
+              Filters for work created by any of these users.
+            type: optional<string>
+            allow-multiple: true
           first:
             docs: >
               The number of work items to return. The default is '50', the
               maximum
               is '5000'.
             type: optional<integer>
+          issue.priority: 
+            docs: | 
+              Filters for issues with any of the provided priorities.
+            type: optional<issue-priority>
+            allow-multiple: true
+          owned_by: 
+            docs: | 
+              Filters for work owned by any of these users.
+            type: optional<string>
+            allow-multiple: true       
+          stage.name: 
+            docs: | 
+              Filters for records in the provided stage(s).
+            type: optional<string>
+            allow-multiple: true           
           target_close_date.after:
             docs: >
               Filters for objects created after the provided timestamp
@@ -46,6 +71,21 @@ service:
               Filters for objects created before the provided timestamp
               (inclusive).
             type: optional<string>
+          ticket.rev_org: 
+            docs: |
+              Filters for tickets that are associated with any of the provided Rev
+              organizations.
+            type: optional<string>
+            allow-multiple: true 
+          ticket.severity: 
+            docs: |
+              Filters for tickets with any of the provided severities.
+            type: optional<ticket-severity>
+            allow-multiple: true      
+          type: 
+            docs: Filters for work of the provided types.
+            type: optional<work-type>
+            allow-multiple: true      
       response: works-export-response
 
     get:
@@ -67,12 +107,27 @@ service:
       request:
         name: works-list-request
         query-parameters:
+          applies_to_part: 
+            docs: > 
+              Filters for work belonging to any of the provided parts.
+            type: optional<string>
+            allow-multiple: true
+          created_by: 
+            docs: > 
+              Filters for work created by any of these users.
+            type: optional<string>
+            allow-multiple: true
           cursor:
             docs: >
               The cursor to resume iteration from. If not provided, then
               iteration
               starts from the beginning.
             type: optional<string>
+          issue.priority: 
+            docs: | 
+              Filters for issues with any of the provided priorities.
+            type: optional<issue-priority>
+            allow-multiple: true
           limit:
             docs: |
               The maximum number of works to return. The default is '50'.
@@ -82,6 +137,16 @@ service:
               The iteration mode to use, otherwise if not set, then "after" is
               used.
             type: optional<commons.list-mode>
+          owned_by: 
+            docs: | 
+              Filters for work owned by any of these users.
+            type: optional<string>
+            allow-multiple: true       
+          stage.name: 
+            docs: | 
+              Filters for records in the provided stage(s).
+            type: optional<string>
+            allow-multiple: true    
           target_close_date.after:
             docs: >
               Filters for objects created after the provided timestamp
@@ -92,6 +157,21 @@ service:
               Filters for objects created before the provided timestamp
               (inclusive).
             type: optional<string>
+          ticket.rev_org: 
+            docs: |
+              Filters for tickets that are associated with any of the provided Rev
+              organizations.
+            type: optional<string>
+            allow-multiple: true 
+          ticket.severity: 
+            docs: |
+              Filters for tickets with any of the provided severities.
+            type: optional<ticket-severity>
+            allow-multiple: true      
+          type: 
+            docs: Filters for work of the provided types.
+            type: optional<work-type>
+            allow-multiple: true              
       response: works-list-response
 
     update:

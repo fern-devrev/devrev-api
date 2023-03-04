@@ -57,6 +57,14 @@ service:
               The iteration mode to use, otherwise if not set, then "after" is
               used.
             type: optional<commons.list-mode>
+          name: 
+            docs: Filters for parts of the provided name(s).
+            type: optional<string>
+            allow-multiple: true
+          type: 
+            docs: Filters for parts of the provided type(s).
+            type: optional<commons.part-type>
+            allow-multiple: true
       response: parts-list-response
 
     update:
