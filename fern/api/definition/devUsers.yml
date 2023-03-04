@@ -6,6 +6,7 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: Dev user interactions.
   endpoints:
     list:
       path: /dev-users.list
@@ -20,6 +21,11 @@ service:
               iteration
               starts from the beginning.
             type: optional<string>
+          email: 
+            docs: > 
+              Filters Dev users based on email addresses.
+            type: optional<string>
+            allow-multiple: true
           limit:
             docs: |
               The maximum number of Dev users to return. The default is '50'.
@@ -29,15 +35,22 @@ service:
               The iteration mode to use, otherwise if not set, then "after" is
               used.
             type: optional<commons.list-mode>
+          sort_by: 
+            docs: |
+              Fields to sort the Dev users by and the direction to sort them.
+            type: optional<string>
+            allow-multiple: true
+          state: 
+            docs: Filters Dev users based on state.
+            type: optional<commons.user-state>
+            allow-multiple: true
       response: dev-users-list-response
-      display-name: List users in organization
 
-    self:
+    getSelf:
       path: /dev-users.self
       method: GET
       docs: Gets the authenticated user's information.
       response: dev-users-self-response
-      display-name: Get authenticated user's information
 
 types:
   dev-users-list-response:
@@ -45,7 +58,7 @@ types:
     properties:
       dev_users:
         docs: The list of Dev users.
-        type: list<commons.dev-user>
+        type: list<dev-user>
       next_cursor:
         docs: |
           The cursor used to iterate subsequent results in accordance to the
@@ -57,8 +70,42 @@ types:
           sort order. If not set, then no prior elements exist.
         type: optional<string>
 
+  dev-user:
+    extends:
+      - user-base
+    properties:
+      external_identities:
+        docs: IDs of the Dev User outside the DevRev SOR.
+        type: optional<list<external-identity>>
+
+  user-base:
+    extends:
+      - commons.atom-base
+    properties:
+      display_name:
+        docs: |
+          The user's display name. The name is non-unique and mutable.
+        type: optional<string>
+      email:
+        docs: Email address of the user.
+        type: optional<string>
+      full_name:
+        docs: Full name of the user.
+        type: optional<string>
+      phone_numbers:
+        docs: Phone numbers of the user.
+        type: optional<list<string>>
+      profile_picture:
+        docs: URL of the user's profile picture.
+        type: optional<string>
+      state: optional<commons.user-state>
+
+  external-identity:
+    docs: External identity of a user.
+    type: map<string, unknown>
+
   dev-users-self-response:
     docs: |
       The response to getting the information for the authenticated user.
     properties:
-      dev_user: commons.dev-user
+      dev_user: dev-user

@@ -6,13 +6,14 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: DevRev part interactions.
   endpoints:
     create:
       path: /parts.create
       method: POST
       docs: Creates new [part](https://devrev.ai/docs/product/parts).
       request: parts-create-request
-      display-name: Create new part
+      response: parts-create-response
 
     delete:
       path: /parts.delete
@@ -20,7 +21,6 @@ service:
       docs: Deletes a [part](https://devrev.ai/docs/product/parts).
       request: parts-delete-request
       response: parts-delete-response
-      display-name: Delete new part
 
     get:
       path: /parts.get
@@ -34,7 +34,6 @@ service:
             docs: The ID of the part to retrieve.
             type: string
       response: parts-get-response
-      display-name: Get a part
 
     list:
       path: /parts.list
@@ -59,8 +58,15 @@ service:
               The iteration mode to use, otherwise if not set, then "after" is
               used.
             type: optional<commons.list-mode>
+          name: 
+            docs: Filters for parts of the provided name(s).
+            type: optional<string>
+            allow-multiple: true
+          type: 
+            docs: Filters for parts of the provided type(s).
+            type: optional<commons.part-type>
+            allow-multiple: true
       response: parts-list-response
-      display-name: Lists collection of parts
 
     update:
       path: /parts.update
@@ -69,11 +75,10 @@ service:
         Updates a [part's](https://devrev.ai/docs/product/parts) information.
       request: parts-update-request
       response: parts-update-response
-      display-name: Update a part
 
 types:
   parts-create-request:
-    properties:
+    base-properties:
       description:
         docs: Description of the part.
         type: optional<string>
@@ -84,10 +89,49 @@ types:
         docs: The users that own the part.
         type: list<string>
       type: commons.part-type
+    union:
+      capability: parts-create-request-capability
+      feature: parts-create-request-feature
+      product: parts-create-request-product
 
   parts-create-response:
     properties:
-      part: commons.part
+      part: part
+
+  parts-create-request-capability: unknown
+
+  parts-create-request-feature: unknown
+
+  parts-create-request-product: unknown
+
+  part:
+    union:
+      product: product
+
+  product:
+    extends:
+      - part-base
+
+  part-base:
+    extends:
+      - commons.atom-base
+    properties:
+      artifacts:
+        docs: The attached artifacts.
+        type: optional<list<commons.artifact-summary>>
+      description:
+        docs: Description of the part.
+        type: optional<string>
+      name:
+        docs: Name of the part.
+        type: optional<string>
+      owned_by:
+        docs: The users that own the part.
+        type: list<commons.user-summary>
+      stage: optional<commons.stage>
+      tags:
+        docs: Tags associated with the object.
+        type: optional<list<commons.tag-with-value>>
 
   parts-delete-request:
     properties:
@@ -99,7 +143,7 @@ types:
 
   parts-get-response:
     properties:
-      part: commons.part
+      part: part
 
   parts-list-response:
     properties:
@@ -110,7 +154,7 @@ types:
         type: optional<string>
       parts:
         docs: The list of parts.
-        type: list<commons.part>
+        type: list<part>
       prev_cursor:
         docs: |
           The cursor used to iterate preceding results in accordance to the
@@ -118,7 +162,7 @@ types:
         type: optional<string>
 
   parts-update-request:
-    properties:
+    base-properties:
       description:
         docs: The updated description of the part.
         type: optional<string>
@@ -129,10 +173,15 @@ types:
         docs: The updated name of the part.
         type: optional<string>
       type: commons.part-type
+    union: 
+      capability: parts-update-request-capability
+      feature: parts-update-request-feature
+      none: {}
+      product: parts-update-request-product
 
   parts-update-response:
     properties:
-      part: commons.part
+      part: part
 
   parts-update-request-capability: map<string, unknown>
 

@@ -1,11 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  commons: commons.yml
-
 service:
   auth: true
   base-path: ""
+  docs: Auth Connections of DevOrg.
   endpoints:
     create:
       path: /dev-orgs.auth-connections.create
@@ -17,10 +15,8 @@ service:
         enable this. Keep in mind that at a time, only one authentication
         connection can be enabled for a Dev organization. At present, only 5
         enterprise connections can be created by an organization.
-      request:
-        body: dev-org-auth-connections-create-request
-        name: createDevOrgRequest
-      display-name: Create new authentication connection
+      request: dev-org-auth-connections-create-request
+      response: dev-org-auth-connections-create-response
 
     delete:
       path: /dev-orgs.auth-connections.delete
@@ -29,10 +25,7 @@ service:
         Deletes an authentication connection. Only enterprise connections which
         are explicitly set up for a Dev organization can be deleted. Default
         connections can not be deleted using this method.
-      request:
-        body: dev-org-auth-connections-delete-request
-        name: deleteDevOrgRequest
-      display-name: Delete authentication connection
+      request: dev-org-auth-connections-delete-request
 
     get:
       path: /dev-orgs.auth-connections.get
@@ -45,7 +38,7 @@ service:
             docs: ID of the authentication connection.
             type: string
       response: dev-org-auth-connections-get-response
-      display-name: Retrieve details for an authentication connection
+
     list:
       path: /dev-orgs.auth-connections.list
       method: GET
@@ -55,7 +48,6 @@ service:
         connections which are either available by default or are explicitly
         created by the user.
       response: dev-org-auth-connections-list-response
-      display-name: List authentication connections
 
     toggle:
       path: /dev-orgs.auth-connections.toggle
@@ -66,25 +58,20 @@ service:
         When a new authentication connection is enabled, the connection which
         is currently enabled for the Dev organization is automatically
         disabled.
-      request:
-        name: toggleDevOrgRequest
-        body: dev-org-auth-connections-toggle-request
-      display-name: Enable or disable authentication connection
+      request: dev-org-auth-connections-toggle-request
 
     update:
       path: /dev-orgs.auth-connections.update
       method: POST
       docs: Updates an authentication connection.
-      request:
-        name: updateDevOrgRequest
-        body: dev-org-auth-connections-update-request
-      display-name: Update authentication connection
-      
+      request: dev-org-auth-connections-update-request
+      response: dev-org-auth-connections-update-response
+
 types:
   dev-org-auth-connections-create-request:
     docs: |
       Request to create a new enterprise authentication connection.
-    properties:
+    base-properties:
       display_name:
         docs: |
           Display name of the authentication connection. This name will be
@@ -92,14 +79,129 @@ types:
           organization. For example, if the display_name is 'abclogin', then
           it would appear on the login button as 'Log in to abclogin'.
         type: optional<string>
-      type: commons.dev-org-auth-connections-create-request-type
+    union: 
+      google_apps: auth-connection-options-google-apps
+      oidc: auth-connection-options-oidc
+      samlp: auth-connection-options-saml
+      waad: auth-connection-options-azure-ad
 
   dev-org-auth-connections-create-response:
     docs: |
       Response for the request to create a new enterprise authentication
       connection.
     properties:
-      auth_connection: commons.auth-connection
+      auth_connection: auth-connection
+
+  dev-org-auth-connections-create-request-type:
+    docs: |
+      Defines the type for the authentication connection. Different types of
+      authentication connections have different configuration parameters.
+    enum:
+      - google_apps
+      - oidc
+      - samlp
+      - waad
+
+  auth-connection-options-azure-ad:
+    docs: |
+      Object encapsulating the configuration parameters for an Azure AD
+      authentication connection.
+    properties:
+      client_id:
+        docs: Client ID for the Azure authentication connection.
+        type: optional<string>
+      client_secret:
+        docs: Client secret for the Azure authentication connection.
+        type: optional<string>
+      domain:
+        docs: Domain URL of the Azure authentication connection.
+        type: optional<string>
+
+  auth-connection-options-google-apps:
+    docs: |
+      Object encapsulating the configuration parameters for a Google Apps
+      authentication connection.
+    properties:
+      client_id:
+        docs: Client ID for the Google Apps authentication connection.
+        type: optional<string>
+      client_secret:
+        docs: |
+          Client secret for the Google Apps authentication connection.
+        type: optional<string>
+      tenant_domain:
+        docs: |
+          Tenant domain URL of the Google Apps authentication connection.
+        type: optional<string>
+
+  auth-connection-options-oidc:
+    docs: |
+      Object encapsulating the configuration parameters for an OIDC
+      authentication connection.
+    properties:
+      client_id:
+        docs: Client ID for the OIDC authentication connection.
+        type: optional<string>
+      client_secret:
+        docs: Client secret for the OIDC authentication connection.
+        type: optional<string>
+      issuer:
+        docs: Issuer URL of the OIDC authentication connection.
+        type: optional<string>
+
+  auth-connection-options-saml:
+    docs: |
+      Object encapsulating the configuration parameters for a SAML
+      authentication connection.
+    properties:
+      sign_in_endpoint:
+        docs: Sign In endpoint for the SAML authentication connection.
+        type: optional<string>
+      signing_cert:
+        docs: |
+          Signing certificate for the SAML authentication connection.
+        type: optional<string>
+
+  auth-connection:
+    docs: |
+      Connection object that specifies the configuration for an
+      authentication connection that is set up for a Dev organization.
+    base-properties:
+      display_name:
+        docs: |
+          Display name of the authentication connection. This name will be
+          visible to all the users when they sign in to this Dev
+          organization. For example, if the display_name is 'abclogin', then
+          it would appear on the login button as 'Log in to abclogin'.
+        type: optional<string>
+      enabled:
+        docs: |
+          Whether the authentication connection is enabled or disabled. If
+          set to false, the authentication connection will not show up on the
+          login screen as a login option.
+        type: optional<boolean>
+      id:
+        docs: ID of the authentication connection.
+        type: string
+    union: 
+      google_apps: auth-connection-options-google-apps
+      oidc: auth-connection-options-oidc
+      samlp: auth-connection-options-saml
+      social: auth-connection-options-social
+      waad: auth-connection-options-azure-ad
+
+  auth-connection-type:
+    docs: |
+      Defines the type for the authentication connection. The configuration
+      for each authentication connection will depend on the type value.
+    enum:
+      - google_apps
+      - oidc
+      - samlp
+      - social
+      - waad
+
+  auth-connection-options-social: map<string, unknown>
 
   dev-org-auth-connections-delete-request:
     docs: |
@@ -116,7 +218,7 @@ types:
       Response object encapsulating the configuration details of an
       authentication connection.
     properties:
-      auth_connection: commons.auth-connection
+      auth_connection: auth-connection
 
   dev-org-auth-connections-list-response:
     docs: |
@@ -127,7 +229,7 @@ types:
         docs: |
           List of all the authentication connections currently configured for
           a Dev organization.
-        type: list<commons.auth-connection>
+        type: list<auth-connection>
 
   dev-org-auth-connections-toggle-request:
     docs: |
@@ -137,13 +239,18 @@ types:
       id:
         docs: ID of the authentication connection to be toggled.
         type: string
-      toggle: optional<commons.auth-connection-toggle>
+      toggle: optional<auth-connection-toggle>
+
+  auth-connection-toggle:
+    enum:
+      - disable
+      - enable
 
   dev-org-auth-connections-update-request:
     docs: |
       Request to update an enterprise authentication connection for a Dev
       organization.
-    properties:
+    base-properties:
       display_name:
         docs: |
           New display name of the authentication connection. This name will
@@ -155,14 +262,19 @@ types:
         docs: |
           ID of the authentication connection which is to be updated.
         type: string
-      type: dev-org-auth-connections-update-request-type
+    union: 
+      google_apps: auth-connection-options-google-apps
+      none: {}
+      oidc: auth-connection-options-oidc
+      samlp: auth-connection-options-saml
+      waad: auth-connection-options-azure-ad
 
   dev-org-auth-connections-update-response:
     docs: |
       Response for the request to update an enterprise authentication
       connection.
     properties:
-      auth_connection: commons.auth-connection
+      auth_connection: auth-connection
 
   dev-org-auth-connections-update-request-type:
     docs: |

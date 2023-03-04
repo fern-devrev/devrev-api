@@ -3,6 +3,7 @@
 service:
   auth: true
   base-path: ""
+  docs: Artifact (file) management APIs.
   endpoints:
     locate:
       path: /artifacts.locate
@@ -15,7 +16,6 @@ service:
             docs: The ID of the artifact to get the URL for.
             type: string
       response: artifacts-locate-response
-      display-name: Get download URL for artifact
 
     prepare:
       path: /artifacts.prepare
@@ -24,7 +24,6 @@ service:
         Creates an artifact and generates an upload URL for its data.
       request: artifacts-prepare-request
       response: artifacts-prepare-response
-      display-name: Create an artifact and generate upload URL 
 
 types:
   artifacts-locate-response:

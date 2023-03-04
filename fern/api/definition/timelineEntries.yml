@@ -6,18 +6,19 @@ imports:
 service:
   auth: true
   base-path: ""
+  docs: APIs to manage timeline entries for objects.
   endpoints:
     create:
       path: /timeline-entries.create
       method: POST
       docs: Creates a new entry on an object's timeline.
       request: timeline-entries-create-request
-      display-name: Create new entry on timeline
+      response: timeline-entries-create-response
 
     get:
       path: /timeline-entries.get
       method: GET
-      docs: Gets an entry on timeline.
+      docs: Gets an entry on an object's timeline.
       request:
         name: getTimelineRequest
         query-parameters:
@@ -25,7 +26,6 @@ service:
             docs: The ID of the timeline entry to get.
             type: string
       response: timeline-entries-get-response
-      display-name: Get an entry on timeline
 
     list:
       path: /timeline-entries.list
@@ -54,36 +54,79 @@ service:
               used.
             type: optional<commons.list-mode>
       response: timeline-entries-list-response
-      display-name: List timeline entries
 
     update:
       path: /timeline-entries.update
       method: POST
       docs: Updates an entry on an object's timeline.
-      request:
-        name: updateTimelineRequest
-        body: timeline-entries-update-request
+      request: timeline-entries-update-request
       response: timeline-entries-update-response
-      display-name: Update timeline entry 
 
 types:
   timeline-entries-create-request:
     docs: The request to create a timeline entry for an object.
-    properties:
+    base-properties:
       object:
         docs: The ID of the object to create the timeline entry for.
         type: string
-      type: commons.timeline-entries-create-request-type
+    union: 
+      timeline_comment: timeline-entries-create-request-timeline-comment
 
   timeline-entries-create-response:
     docs: The response to creating a timeline entry for an object.
     properties:
-      timeline_entry: commons.timeline-entry
+      timeline_entry: timeline-entry
+
+  timeline-entries-create-request-type:
+    enum:
+      - timeline_comment
+
+  timeline-entries-create-request-timeline-comment:
+    properties:
+      body:
+        docs: The comment's body.
+        type: optional<string>
+      body_type: optional<timeline-comment-body-type>
+      snap_kit_body:
+        docs: The SnapKit body of the comment.
+        type: optional<map<string, unknown>>
+
+  timeline-comment-body-type:
+    docs: The type of the body to use for the comment.
+    enum:
+      - snap_kit
+      - text
+
+  timeline-entry:
+    union:
+      timeline_comment: timeline-comment
+
+  timeline-entry-type:
+    enum:
+      - timeline_comment
+
+  timeline-comment:
+    extends:
+      - timeline-entry-base
+    properties:
+      body:
+        docs: |
+          The comment's body. If the comment has been deleted, then no body
+          will appear in the response.
+        type: optional<string>
+      body_type: optional<timeline-comment-body-type>
+      snap_kit_body:
+        docs: The SnapKit Body of the comment.
+        type: optional<map<string, unknown>>
+
+  timeline-entry-base:
+    extends:
+      - commons.atom-base
 
   timeline-entries-get-response:
     docs: The request to getting a timeline entry.
     properties:
-      timeline_entry: commons.timeline-entry
+      timeline_entry: timeline-entry
 
   timeline-entries-list-response:
     docs: The response to listing timeline entries for an object.
@@ -100,20 +143,21 @@ types:
         type: optional<string>
       timeline_entries:
         docs: The timeline entries for the object.
-        type: list<commons.timeline-entry>
+        type: list<timeline-entry>
 
   timeline-entries-update-request:
     docs: The request to update a timeline entry.
-    properties:
+    base-properties:
       id:
         docs: The ID of the timeline entry to update.
         type: string
-      type: timeline-entries-update-request-type
+    union: 
+      timeline_comment: timeline-entries-update-request-timeline-comment
 
   timeline-entries-update-response:
     docs: The response to updating a timeline entry.
     properties:
-      timeline_entry: commons.timeline-entry
+      timeline_entry: timeline-entry
 
   timeline-entries-update-request-type:
     enum:
@@ -124,7 +168,7 @@ types:
       body:
         docs: The updated comment's body.
         type: optional<string>
-      body_type: optional<commons.timeline-comment-body-type>
+      body_type: optional<timeline-comment-body-type>
       snap_kit_body:
         docs: The SnapKit body of the comment.
         type: optional<map<string, unknown>>
