@@ -88,7 +88,6 @@ types:
       owned_by:
         docs: The users that own the part.
         type: list<string>
-      type: commons.part-type
     union:
       capability: parts-create-request-capability
       feature: parts-create-request-feature
@@ -172,7 +171,6 @@ types:
       name:
         docs: The updated name of the part.
         type: optional<string>
-      type: commons.part-type
     union: 
       capability: parts-update-request-capability
       feature: parts-update-request-feature
