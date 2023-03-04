@@ -1,8 +1,12 @@
 name: api
-display-name: DevRev REST API
-headers: {}
-auth: auth-token
+display-name: DevRev API
+auth: apiKey
 auth-schemes:
-  auth-token:
+  apiKey:
     header: Authorization
     name: apiKey
+error-discrimination:
+  strategy: status-code
+default-environment: Production
+environments: 
+  Production: https://api.devrev.ai
