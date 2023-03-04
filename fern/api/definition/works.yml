@@ -15,7 +15,6 @@ service:
         [ticket](https://devrev.ai/docs/product/support)) item.
       request: works-create-request
       response: works-create-response
-      display-name: Create new work item
 
     delete:
       path: /works.delete
@@ -23,7 +22,6 @@ service:
       docs: Deletes a work item.
       request: works-delete-request
       response: works-delete-response
-      display-name: Delete work item
 
     export:
       path: /works.export
@@ -49,7 +47,6 @@ service:
               (inclusive).
             type: optional<string>
       response: works-export-response
-      display-name: Export collection of work items
 
     get:
       path: /works.get
@@ -62,7 +59,6 @@ service:
             docs: The work's ID.
             type: string
       response: works-get-response
-      display-name: Get work item
 
     list:
       path: /works.list
@@ -97,7 +93,6 @@ service:
               (inclusive).
             type: optional<string>
       response: works-list-response
-      display-name: List collection of work items
 
     update:
       path: /works.update
@@ -105,17 +100,10 @@ service:
       docs: Updates a work item's information.
       request: works-update-request
       response: works-update-response
-      display-name: Update work item
 
 types:
-  works-create-request: 
-    union: 
-      issue: works-create-request-issue
-      ticket: works-create-request-ticket
-
-  works-create-request-issue:
-    properties:
-      priority: optional<commons.issue-priority>
+  works-create-request:
+    base-properties:
       applies_to_part:
         docs: |
           The [part](https://devrev.ai/docs/product/parts) that the work
@@ -135,56 +123,135 @@ types:
       reported_by:
         docs: The users that reported the work.
         type: optional<list<string>>
-      stage: optional<commons.stage-init>
+      stage: optional<stage-init>
       tags:
         docs: Tags associated with the work item.
-        type: optional<list<commons.set-tag-with-value>>
+        type: optional<list<set-tag-with-value>>
       target_close_date:
         docs: Timestamp for when the work is expected to be complete.
         type: optional<string>
       title:
         docs: Title of the work object.
         type: string
+    union: 
+      issue: works-create-request-issue
+      ticket: works-create-request-ticket
+
+  works-create-response:
+    properties:
+      work: work
+
+  stage-init:
+    docs: Sets an object's initial stage.
+    properties:
+      name:
+        docs: The name of the stage.
+        type: string
+
+  set-tag-with-value:
+    properties:
+      id:
+        docs: The ID of the tag.
+        type: string
+      value:
+        docs: |
+          The value for the object's association with the tag. If specified,
+          the value must be one that's specified in the tag's allowed values.
+        type: optional<string>
+
+  work-type:
+    enum:
+      - issue
+      - ticket
+
+  works-create-request-issue:
+    properties:
+      priority: optional<issue-priority>
+
+  issue-priority:
+    docs: Priority of the work based upon impact and criticality.
+    enum:
+      - p0
+      - p1
+      - p2
+      - p3
 
   works-create-request-ticket:
     properties:
       rev_org:
         docs: The Rev organization that the ticket is associated with.
         type: optional<string>
-      severity: optional<commons.ticket-severity>
-      applies_to_part:
-        docs: |
-          The [part](https://devrev.ai/docs/product/parts) that the work
-          applies to. Specifying a part is required when creating tickets and
-          issues.
-        type: string
+      severity: optional<ticket-severity>
+
+  ticket-severity:
+    docs: Severity of the ticket.
+    enum:
+      - blocker
+      - high
+      - low
+      - medium
+
+  work:
+    union:
+      issue: issue
+      ticket: ticket
+
+  issue:
+    extends:
+      - work-base
+    properties:
+      priority: optional<issue-priority>
+
+  work-base:
+    extends:
+      - commons.atom-base
+    properties:
+      applies_to_part: optional<part-summary>
       artifacts:
-        docs: |
-          The IDs of the artifacts to associate with the work item.
-        type: optional<list<string>>
+        docs: The artifacts attached to the work item.
+        type: optional<list<commons.artifact-summary>>
       body:
         docs: Body of the work object.
         type: optional<string>
       owned_by:
         docs: The users that own the work.
-        type: list<string>
+        type: list<commons.user-summary>
       reported_by:
-        docs: The users that reported the work.
-        type: optional<list<string>>
-      stage: optional<commons.stage-init>
+        docs: Users that reported the work.
+        type: optional<list<commons.user-summary>>
+      stage: optional<commons.stage>
       tags:
-        docs: Tags associated with the work item.
-        type: optional<list<commons.set-tag-with-value>>
+        docs: Tags associated with the object.
+        type: optional<list<commons.tag-with-value>>
       target_close_date:
-        docs: Timestamp for when the work is expected to be complete.
+        docs: Timestamp when the work is expected to be complete.
         type: optional<string>
       title:
         docs: Title of the work object.
         type: string
 
-  works-create-response:
+  part-summary:
+    union:
+      product: product-summary
+
+  product-summary:
+    extends:
+      - part-base-summary
+
+  part-base-summary:
+    extends:
+      - commons.atom-base-summary
     properties:
-      work: commons.work
+      name:
+        docs: Name of the part.
+        type: optional<string>
+
+  ticket:
+    extends:
+      - work-base
+    properties:
+      rev_org: optional<commons.org-summary>
+      severity: optional<ticket-severity>
 
   works-delete-request:
     properties:
@@ -198,11 +265,11 @@ types:
     properties:
       works:
         docs: The resulting collection of work items.
-        type: list<commons.work>
+        type: list<work>
 
   works-get-response:
     properties:
-      work: commons.work
+      work: work
 
   works-list-response:
     properties:
@@ -218,10 +285,10 @@ types:
         type: optional<string>
       works:
         docs: The list of works.
-        type: list<commons.work>
+        type: list<work>
 
   works-update-request:
-    properties:
+    base-properties:
       applies_to_part:
         docs: Updates the part that the work applies to.
         type: optional<string>
@@ -248,11 +315,14 @@ types:
         docs: |
           Updated title of the work object, or unchanged if not provided.
         type: optional<string>
-      type: commons.work-type
+    union: 
+      issue: works-update-request-issue
+      none: {}
+      ticket: works-update-request-ticket
 
   works-update-response:
     properties:
-      work: commons.work
+      work: work
 
   works-update-request-artifact-ids:
     properties:
@@ -287,11 +357,11 @@ types:
     properties:
       set:
         docs: Sets the provided tags on the work item.
-        type: optional<list<commons.set-tag-with-value>>
+        type: optional<list<set-tag-with-value>>
 
   works-update-request-issue:
     properties:
-      priority: optional<commons.issue-priority>
+      priority: optional<issue-priority>
 
   works-update-request-ticket:
     properties:
@@ -299,4 +369,4 @@ types:
         docs: |
           Updates the Rev organization that the ticket is associated with.
         type: optional<string>
-      severity: optional<commons.ticket-severity>
+      severity: optional<ticket-severity>

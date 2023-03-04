@@ -14,7 +14,7 @@ service:
         Creates a new tag, which is used to create associations between objects
         and a logical concept denoted by the tag's name.
       request: tags-create-request
-      display-name: Create new tag
+      response: tags-create-response
 
     delete:
       path: /tags.delete
@@ -22,7 +22,6 @@ service:
       docs: Deletes a tag.
       request: tags-delete-request
       response: tags-delete-response
-      display-name: Delete a tag
 
     get:
       path: /tags.get
@@ -35,7 +34,6 @@ service:
             docs: The requested tag's ID.
             type: string
       response: tags-get-response
-      display-name: Get a tag
 
     list:
       path: /tags.list
@@ -59,7 +57,6 @@ service:
               used.
             type: optional<commons.list-mode>
       response: tags-list-response
-      display-name: List all available tags
 
     update:
       path: /tags.update
@@ -67,7 +64,6 @@ service:
       docs: Updates a tag's information.
       request: tags-update-request
       response: tags-update-response
-      display-name: Update a tag
 
 types:
   tags-create-request:
@@ -89,7 +85,29 @@ types:
   tags-create-response:
     docs: The response to creating a new tag.
     properties:
-      tag: commons.tag
+      tag: tag
+
+  tag:
+    extends:
+      - commons.atom-base
+    properties:
+      allowed_values:
+        docs: |
+          The allowed values for the tag, where a value is provided when a
+          tag is associated with an object. If empty, then no value should be
+          provided when the association is made.
+        type: optional<list<string>>
+      description:
+        docs: |
+          An informative description for the tag that should provide context
+          on the tag's purpose and usage.
+        type: optional<string>
+      name:
+        docs: |
+          The name of the tag, which denotes the logical concept by which all
+          tagged objects will be associated. The name is guaranteed to be
+          unique.
+        type: string
 
   tags-delete-request:
     docs: The request to delete a tag.
@@ -105,7 +123,7 @@ types:
   tags-get-response:
     docs: The response to getting a tag's information.
     properties:
-      tag: commons.tag
+      tag: tag
 
   tags-list-response:
     docs: The response to listing the tags.
@@ -122,7 +140,7 @@ types:
         type: optional<string>
       tags:
         docs: The list of tags.
-        type: list<commons.tag>
+        type: list<tag>
 
   tags-update-request:
     docs: The request to update a tag.
@@ -143,7 +161,7 @@ types:
   tags-update-response:
     docs: The response for updating a tag.
     properties:
-      tag: commons.tag
+      tag: tag
 
   tags-update-allowed-values:
     docs: Specifies an update to a tag's allowed values.

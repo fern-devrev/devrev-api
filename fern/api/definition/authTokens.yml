@@ -14,7 +14,7 @@ service:
         Creates a JWT corresponding to the requested token type for the
         authenticated user.
       request: auth-tokens-create-request
-      display-name: Create a JWT token
+      response: auth-tokens-create-response
 
     delete:
       path: /auth-tokens.delete
@@ -23,7 +23,6 @@ service:
         Revokes the token that matches the given token ID issued under the
         given Dev organization.
       request: auth-tokens-delete-request
-      display-name: Revoke a token under Dev org
 
     get:
       path: /auth-tokens.get
@@ -39,7 +38,6 @@ service:
               The unique identifier of the token under a given Dev organization.
             type: string
       response: auth-tokens-get-response
-      display-name: Get token metadata
 
     list:
       path: /auth-tokens.list
@@ -59,7 +57,7 @@ service:
             docs: |
               The type of the requested token. If no value is specified, the
               response will include tokens of all the types.
-            type: optional<commons.auth-token-requested-token-type>
+            type: optional<auth-token-requested-token-type>
           subject:
             docs: |
               The subject associated with the token. In the absence of this
@@ -67,7 +65,6 @@ service:
               subject.
             type: optional<string>
       response: auth-tokens-list-response
-      display-name: List token metadeta for all tokens of token type
 
     selfDelete:
       path: /auth-tokens.self.delete
@@ -76,7 +73,6 @@ service:
         Revokes all the tokens that matches the given token type created by the
         authenticated user.
       request: auth-tokens-self-delete-request
-      display-name: Delete token created by user
 
     update:
       path: /auth-tokens.update
@@ -86,7 +82,6 @@ service:
         organization.
       request: auth-tokens-update-request
       response: auth-tokens-update-response
-      display-name: Update token metadeta
 
 types:
   auth-tokens-create-request:
@@ -108,9 +103,9 @@ types:
         docs: |
           The expected validity lifetime of the token in number of days.
         type: optional<integer>
-      grant_type: optional<commons.auth-token-grant-type>
-      requested_token_type: optional<commons.auth-token-requested-token-type>
-      rev_info: optional<commons.auth-tokens-rev-info>
+      grant_type: optional<auth-token-grant-type>
+      requested_token_type: optional<auth-token-requested-token-type>
+      rev_info: optional<auth-tokens-rev-info>
       scope:
         docs: |
           The requested set of scopes associated with the issued token. A
@@ -122,7 +117,7 @@ types:
           Represents the entity that requests the token. Not required when
           requesting an application access token (AAT).
         type: optional<string>
-      subject_token_type: optional<commons.auth-token-subject-token-type>
+      subject_token_type: optional<auth-token-subject-token-type>
       token_hint:
         docs: A hint that identifies the token.
         type: optional<string>
@@ -156,7 +151,98 @@ types:
           The scopes associated with the issued token. A space-delimited list
           of values in which the order of values does not matter.
         type: optional<string>
-      token_type: commons.auth-token-token-type
+      token_type: auth-token-token-type
+  
+  auth-token-grant-type:
+    docs: Specifies the process of obtaining a token.
+    enum:
+      - value: urn:devrev:params:oauth:grant-type:token-issue
+        name: token_issue
+      - value: urn:ietf:params:oauth:grant-type:token-exchange
+        name: token_exchange
+  
+  auth-token-requested-token-type:
+    docs: The type of the requested token.
+    enum:
+      - value: urn:devrev:params:oauth:token-type:aat
+        name: token_type_aat
+      - value: urn:devrev:params:oauth:token-type:aat:public
+        name: token_type_public
+      - value: urn:devrev:params:oauth:token-type:dev
+        name: token_type_dev
+      - value: urn:devrev:params:oauth:token-type:pat
+        name: token_type_pat
+      - value: urn:devrev:params:oauth:token-type:rev
+        name: token_type_rev
+      - value: urn:devrev:params:oauth:token-type:session
+        name: token_type_session
+      - value: urn:devrev:params:oauth:token-type:session:dev0
+        name: token_type_dev0
+      - value: urn:devrev:params:oauth:token-type:sys
+        name: token_type_sys
+      - value: urn:ietf:params:oauth:token-type:jwt
+        name: token_type_jwt
+
+  auth-tokens-rev-info:
+    docs: |
+      Carries info corresponding to the Rev user to be provisioned and/or
+      issue a Rev session token.
+    properties:
+      org_ref:
+        docs: An identifier which uniquely identifies a Rev org.
+        type: optional<string>
+      org_traits: optional<auth-tokens-org-traits>
+      user_ref:
+        docs: An identifier which uniquely identifies a Rev user.
+        type: string
+      user_traits: optional<auth-tokens-user-traits>
+
+  auth-tokens-org-traits:
+    docs: Carries Rev org info.
+    properties:
+      display_name:
+        docs: The display name of the Rev org.
+        type: optional<string>
+      domain:
+        docs: The domain of the Rev org.
+        type: optional<string>
+
+  auth-tokens-user-traits:
+    docs: Carries Rev user info.
+    properties:
+      display_name:
+        docs: The display name of the Rev user.
+        type: optional<string>
+      email:
+        docs: The email address of the Rev user.
+        type: optional<string>
+      full_name:
+        docs: The full name of the Rev user.
+        type: optional<string>
+
+  auth-token-subject-token-type:
+    docs: The type of the subject token.
+    enum:
+      - value: urn:devrev:params:oauth:token-type:jwt:auth0
+        name: token_type_jwt_auth0
+      - value: urn:devrev:params:oauth:token-type:jwt:dev
+        name: token_type_jwt_revinfo
+      - value: urn:devrev:params:oauth:token-type:revinfo
+        name: token_type_revinfo
+      - value: urn:devrev:params:oauth:token-type:sysu
+        name: token_type_sysu
+      - value: urn:devrev:params:oauth:token-type:userinfo
+        name: token_type_userinfo
+      - value: urn:devrev:params:oauth:token-type:userinfo:profile
+        name: token_type_userinfo_profile
+      - value: urn:ietf:params:oauth:token-type:jwt
+        name: token_type_jwt
+
+  auth-token-token-type:
+    docs: |
+      The type of the issued token. Bearer is the only supported token type.
+    enum:
+      - bearer
 
   auth-tokens-delete-request:
     docs: The request to revoke the token.
@@ -171,21 +257,55 @@ types:
   auth-tokens-get-response:
     docs: The response to get the token metadata.
     properties:
-      token: commons.auth-token
+      token: auth-token
+
+  auth-token:
+    extends:
+      - commons.atom-base
+    properties:
+      client_id:
+        docs: |
+          An identifier that represents the application that requested the
+          token. Only applicable for application access tokens.
+        type: optional<string>
+      expires_at:
+        docs: The time at which the token expires.
+        type: optional<string>
+      issued_at:
+        docs: The time at which the token was issued.
+        type: optional<string>
+      requested_token_type: optional<auth-token-requested-token-type>
+      scopes:
+        docs: The scopes associated with the issued token.
+        type: optional<list<string>>
+      status: optional<auth-token-status>
+      subject:
+        docs: The subject of the token.
+        type: optional<string>
+      token_hint:
+        docs: A hint that identifies the token.
+        type: optional<string>
+
+  auth-token-status:
+    docs: The status of the token.
+    enum:
+      - active
+      - expired
+      - revoked
 
   auth-tokens-list-response:
     docs: The response to list the token metadata.
     properties:
       tokens:
         docs: The list of token metadata.
-        type: list<commons.auth-token>
+        type: list<auth-token>
 
   auth-tokens-self-delete-request:
     docs: |
       The request to delete all the tokens created by the authenticated user,
       that match with the provided token type.
     properties:
-      requested_token_type: optional<commons.auth-token-requested-token-type>
+      requested_token_type: optional<auth-token-requested-token-type>
 
   auth-tokens-update-request:
     docs: A request to update the token metadata.
@@ -201,4 +321,4 @@ types:
   auth-tokens-update-response:
     docs: Response for the request to update the token metadata.
     properties:
-      token: commons.auth-token
+      token: auth-token

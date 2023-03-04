@@ -12,7 +12,7 @@ service:
       method: POST
       docs: Creates a new webhook target.
       request: webhooks-create-request
-      display-name: Create new webhook target
+      response: webhooks-create-response
 
     delete:
       path: /webhooks.delete
@@ -20,7 +20,6 @@ service:
       docs: Deletes the requested webhook.
       request: webhooks-delete-request
       response: webhooks-delete-response
-      display-name: Delete webhook
 
     get:
       path: /webhooks.get
@@ -33,14 +32,12 @@ service:
             docs: ID for the webhook.
             type: string
       response: webhooks-get-response
-      display-name: Get webhook information
 
     list:
       path: /webhooks.list
       method: GET
       docs: Lists the webhooks.
       response: webhooks-list-response
-      display-name: List webhooks
 
     update:
       path: /webhooks.update
@@ -48,7 +45,6 @@ service:
       docs: Updates the requested webhook.
       request: webhooks-update-request
       response: webhooks-update-response
-      display-name: Update webhook
 
 types:
   webhooks-create-request:
@@ -56,7 +52,7 @@ types:
     properties:
       event_types:
         docs: The event types that the webhook endpoint will receive.
-        type: optional<list<commons.webhook-event-type>>
+        type: optional<list<webhook-event-type>>
       secret:
         docs: |
           The secret to use when verifying webhook events. If provided, the
@@ -71,7 +67,49 @@ types:
   webhooks-create-response:
     docs: The response to creating a new webhook.
     properties:
-      webhook: commons.webhook
+      webhook: webhook
+
+  webhook-event-type:
+    docs: The event types that the webhook will receive.
+    enum:
+      - part_created
+      - part_deleted
+      - part_updated
+      - rev_org_created
+      - rev_org_deleted
+      - rev_org_updated
+      - tag_created
+      - tag_deleted
+      - tag_updated
+      - timeline_entry_created
+      - timeline_entry_deleted
+      - timeline_entry_updated
+      - verify
+      - work_created
+      - work_deleted
+      - work_updated
+
+  webhook:
+    extends:
+      - commons.atom-base
+    properties:
+      event_types:
+        docs: The event types that the webhook will receive.
+        type: optional<list<webhook-event-type>>
+      secret:
+        docs: The secret to use for verifying webhook events.
+        type: string
+      status: webhook-status
+      url:
+        docs: The URL of the webhook endpoint.
+        type: string
+
+  webhook-status:
+    docs: The status of the webhook.
+    enum:
+      - active
+      - inactive
+      - unverified
 
   webhooks-delete-request:
     docs: The request to delete a webhook.
@@ -87,14 +125,14 @@ types:
   webhooks-get-response:
     docs: The response to getting the information for the webhook.
     properties:
-      webhook: commons.webhook
+      webhook: webhook
 
   webhooks-list-response:
     docs: The response to listing the webhooks.
     properties:
       webhooks:
         docs: The list of webhooks.
-        type: list<commons.webhook>
+        type: list<webhook>
 
   webhooks-update-request:
     docs: The request to update a webhook.
@@ -122,7 +160,7 @@ types:
   webhooks-update-response:
     docs: The response to updating the webhook.
     properties:
-      webhook: commons.webhook
+      webhook: webhook
 
   webhooks-update-action:
     docs: The action to update the webhook's status.
@@ -137,16 +175,16 @@ types:
           The event types to add. If a provided event type is already set for
           the webhook, then nothing is done. Note this is mutually exclusive
           with 'set'.
-        type: optional<list<commons.webhook-event-type>>
+        type: optional<list<webhook-event-type>>
       remove:
         docs: |
           The event types to remove. If a provided event type isn't set for
           the webhook, then nothing is done. Note this is mutually exclusive
           with 'set'.
-        type: optional<list<commons.webhook-event-type>>
+        type: optional<list<webhook-event-type>>
       set:
         docs: |
           The updated event types, which will replace the webhook's current
           event types. Note this is mutually exclusive with 'add' and
           'remove'.
-        type: optional<list<commons.webhook-event-type>>
+        type: optional<list<webhook-event-type>>

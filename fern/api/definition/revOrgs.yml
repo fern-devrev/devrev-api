@@ -14,7 +14,7 @@ service:
         Creates a Rev organization in the authenticated user's Dev
         organization.
       request: rev-orgs-create-request
-      display-name: Create Rev organization
+      response: rev-orgs-create-response
 
     delete:
       path: /rev-orgs.delete
@@ -22,7 +22,6 @@ service:
       docs: Deletes the Rev organization.
       request: rev-orgs-delete-request
       response: rev-orgs-delete-response
-      display-name: Delete Rev organization
 
     get:
       path: /rev-orgs.get
@@ -35,7 +34,6 @@ service:
             docs: The ID of the required Rev organization.
             type: string
       response: rev-orgs-get-response
-      display-name: Get Rev organization information
 
     list:
       path: /rev-orgs.list
@@ -83,7 +81,6 @@ service:
               (inclusive).
             type: optional<string>
       response: rev-orgs-list-response
-      display-name: Get list of Rev organizations' information
 
     update:
       path: /rev-orgs.update
@@ -91,7 +88,6 @@ service:
       docs: Updates the Rev organization's information.
       request: rev-orgs-update-request
       response: rev-orgs-update-response
-      display-name: Update the Rev organization's information.
 
 types:
   rev-orgs-create-request:
@@ -108,7 +104,7 @@ types:
       domain:
         docs: Company's domain name. Example - 'devrev.ai'.
         type: optional<string>
-      environment: optional<commons.org-environment>
+      environment: optional<org-environment>
       external_ref:
         docs: |
           External ref is a custom unique identifier which is a reference to
@@ -120,7 +116,41 @@ types:
     docs: |
       Response object for request to create a new Rev organization.
     properties:
-      rev_org: commons.rev-org
+      rev_org: rev-org
+
+  org-environment:
+    docs: |
+      The environment of the Org. Defaults to 'production' if not specified.
+    enum:
+      - production
+      - staging
+      - test
+
+  rev-org:
+    extends:
+      - org-base
+    properties:
+      description:
+        docs: Description of the Rev organization.
+        type: optional<string>
+      domain:
+        docs: Company's domain name. Example - 'devrev.ai'.
+        type: optional<string>
+      external_ref:
+        docs: |
+          External ref is a unique identifier for the Rev (customer)
+          organization from your primary customer system of records. If none
+          is specified, a system-generated identifier will be assigned to the
+          organization.
+        type: optional<string>
+
+  org-base:
+    extends:
+      - commons.atom-base
+    properties:
+      display_name:
+        docs: Name of the Organization.
+        type: optional<string>
 
   rev-orgs-delete-request:
     docs: Request object to delete a Rev organization.
@@ -136,7 +166,7 @@ types:
   rev-orgs-get-response:
     docs: The response to getting a Rev organization's information.
     properties:
-      rev_org: commons.rev-org
+      rev_org: rev-org
 
   rev-orgs-list-response:
     docs: |
@@ -154,7 +184,7 @@ types:
         type: optional<string>
       rev_orgs:
         docs: List with all of the Rev organizations' information.
-        type: list<commons.rev-org>
+        type: list<rev-org>
 
   rev-orgs-update-request:
     docs: |
@@ -169,7 +199,7 @@ types:
       domain:
         docs: Company's domain name. Example - 'devrev.ai'.
         type: optional<string>
-      environment: optional<commons.org-environment>
+      environment: optional<org-environment>
       external_ref:
         docs: |
           External ref is a custom unique identifier which is a reference to
@@ -183,4 +213,4 @@ types:
   rev-orgs-update-response:
     docs: Response object to updating Rev organization's information.
     properties:
-      rev_org: commons.rev-org
+      rev_org: rev-org
