@@ -1,11 +1,13 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
+  display-name: artifacts
   auth: true
   base-path: ""
   docs: Artifact (file) management APIs.
   endpoints:
     locate:
+      display-name: artifacts-locate
       path: /artifacts.locate
       method: GET
       docs: Gets the download URL for the artifact.
@@ -18,6 +20,7 @@ service:
       response: artifacts-locate-response
 
     prepare:
+      display-name: artifacts-prepare
       path: /artifacts.prepare
       method: POST
       docs: |

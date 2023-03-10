@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: timeline-entries 
   auth: true
   base-path: ""
   docs: APIs to manage timeline entries for objects.
   endpoints:
     create:
+      display-name: timeline-entries-create
       path: /timeline-entries.create
       method: POST
       docs: Creates a new entry on an object's timeline.
@@ -16,6 +18,7 @@ service:
       response: timeline-entries-create-response
 
     get:
+      display-name: timeline-entries-get
       path: /timeline-entries.get
       method: GET
       docs: Gets an entry on an object's timeline.
@@ -28,6 +31,7 @@ service:
       response: timeline-entries-get-response
 
     list:
+      display-name: timeline-entries-list
       path: /timeline-entries.list
       method: GET
       docs: Lists the timeline entries for an object.
@@ -56,6 +60,7 @@ service:
       response: timeline-entries-list-response
 
     update:
+      display-name: timeline-entries-update
       path: /timeline-entries.update
       method: POST
       docs: Updates an entry on an object's timeline.

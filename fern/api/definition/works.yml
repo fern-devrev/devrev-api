@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: works
   auth: true
   base-path: ""
   docs: DevRev work interactions.
   endpoints:
     create:
+      display-name: works-create
       path: /works.create
       method: POST
       docs: |
@@ -18,6 +20,7 @@ service:
       response: works-create-response
 
     delete:
+      display-name: works-delete
       path: /works.delete
       method: POST
       docs: Deletes a work item.
@@ -25,6 +28,7 @@ service:
       response: works-delete-response
 
     export:
+      display-name: works-export
       path: /works.export
       method: GET
       docs: Exports a collection of work items.
@@ -102,6 +106,7 @@ service:
       response: works-get-response
 
     list:
+      display-name: works-list
       path: /works.list
       method: GET
       docs: Lists a collection of work items.
@@ -176,6 +181,7 @@ service:
       response: works-list-response
 
     update:
+      display-name: works-update
       path: /works.update
       method: POST
       docs: Updates a work item's information.

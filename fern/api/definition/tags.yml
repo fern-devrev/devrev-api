@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: tags
   auth: true
   base-path: ""
   docs: DevRev tag interactions.
   endpoints:
     create:
+      display-name: tags-create
       path: /tags.create
       method: POST
       docs: |
@@ -18,6 +20,7 @@ service:
       response: tags-create-response
 
     delete:
+      display-name: tags-delete
       path: /tags.delete
       method: POST
       docs: Deletes a tag.
@@ -25,6 +28,7 @@ service:
       response: tags-delete-response
 
     get:
+      display-name: tags-get
       path: /tags.get
       method: GET
       docs: Gets a tag's information.
@@ -37,6 +41,7 @@ service:
       response: tags-get-response
 
     list:
+      display-name: tags-list
       path: /tags.list
       method: GET
       docs: Lists the available tags.
@@ -60,6 +65,7 @@ service:
       response: tags-list-response
 
     update:
+      display-name: tags-update
       path: /tags.update
       method: POST
       docs: Updates a tag's information.
