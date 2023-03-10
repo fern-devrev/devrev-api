@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-service: 
+service:
   display-name: auth-connection
   auth: true
   base-path: ""
@@ -86,7 +86,7 @@ types:
           organization. For example, if the display_name is 'abclogin', then
           it would appear on the login button as 'Log in to abclogin'.
         type: optional<string>
-    union: 
+    union:
       google_apps: auth-connection-options-google-apps
       oidc: auth-connection-options-oidc
       samlp: auth-connection-options-saml
@@ -190,7 +190,7 @@ types:
       id:
         docs: ID of the authentication connection.
         type: string
-    union: 
+    union:
       google_apps: auth-connection-options-google-apps
       oidc: auth-connection-options-oidc
       samlp: auth-connection-options-saml
@@ -269,7 +269,7 @@ types:
         docs: |
           ID of the authentication connection which is to be updated.
         type: string
-    union: 
+    union:
       google_apps: auth-connection-options-google-apps
       none: {}
       oidc: auth-connection-options-oidc
