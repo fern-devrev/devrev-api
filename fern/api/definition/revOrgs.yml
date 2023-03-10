@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: rev-orgs
   auth: true
   base-path: ""
   docs: Rev organization interactions.
   endpoints:
     create:
+      display-name: rev-orgs-create
       path: /rev-orgs.create
       method: POST
       docs: |
@@ -18,6 +20,7 @@ service:
       response: rev-orgs-create-response
 
     delete:
+      display-name: rev-orgs-delete
       path: /rev-orgs.delete
       method: POST
       docs: Deletes the Rev organization.
@@ -25,6 +28,7 @@ service:
       response: rev-orgs-delete-response
 
     get:
+      display-name: rev-orgs-get
       path: /rev-orgs.get
       method: GET
       docs: Retrieves the Rev organization's information.
@@ -37,6 +41,7 @@ service:
       response: rev-orgs-get-response
 
     list:
+      display-name: rev-orgs-list
       path: /rev-orgs.list
       method: GET
       docs: |
@@ -94,6 +99,7 @@ service:
       response: rev-orgs-list-response
 
     update:
+      display-name: rev-orgs-update
       path: /rev-orgs.update
       method: POST
       docs: Updates the Rev organization's information.

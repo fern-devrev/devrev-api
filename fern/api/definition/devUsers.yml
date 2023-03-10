@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: dev-users
   auth: true
   base-path: ""
   docs: Dev user interactions.
   endpoints:
     list:
+      display-name: dev-users-list
       path: /dev-users.list
       method: GET
       docs: Lists users within your organization.
@@ -47,6 +49,7 @@ service:
       response: dev-users-list-response
 
     getSelf:
+      display-name: dev-users-self
       path: /dev-users.self
       method: GET
       docs: Gets the authenticated user's information.

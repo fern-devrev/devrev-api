@@ -1,11 +1,13 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-service:
+service: 
+  display-name: auth-connection
   auth: true
   base-path: ""
   docs: Auth Connections of DevOrg.
   endpoints:
     create:
+      display-name: dev-org-auth-connections-create
       path: /dev-orgs.auth-connections.create
       method: POST
       docs: |
@@ -19,6 +21,7 @@ service:
       response: dev-org-auth-connections-create-response
 
     delete:
+      display-name: dev-org-auth-connections-delete
       path: /dev-orgs.auth-connections.delete
       method: POST
       docs: |
@@ -28,6 +31,7 @@ service:
       request: dev-org-auth-connections-delete-request
 
     get:
+      display-name: dev-org-auth-connections-get
       path: /dev-orgs.auth-connections.get
       method: GET
       docs: Retrieves the details for an authentication connection.
@@ -40,6 +44,7 @@ service:
       response: dev-org-auth-connections-get-response
 
     list:
+      display-name: dev-org-auth-connections-list
       path: /dev-orgs.auth-connections.list
       method: GET
       docs: |
@@ -50,6 +55,7 @@ service:
       response: dev-org-auth-connections-list-response
 
     toggle:
+      display-name: dev-org-auth-connections-toggle
       path: /dev-orgs.auth-connections.toggle
       method: POST
       docs: |
@@ -61,6 +67,7 @@ service:
       request: dev-org-auth-connections-toggle-request
 
     update:
+      display-name: dev-org-auth-connections-update
       path: /dev-orgs.auth-connections.update
       method: POST
       docs: Updates an authentication connection.

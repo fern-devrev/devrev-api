@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: auth-tokens
   auth: true
   base-path: ""
   docs: Security token interactions.
   endpoints:
     create:
+      display-name: auth-tokens-create
       path: /auth-tokens.create
       method: POST
       docs: |
@@ -18,6 +20,7 @@ service:
       response: auth-tokens-create-response
 
     delete:
+      display-name: auth-tokens-delete
       path: /auth-tokens.delete
       method: POST
       docs: |
@@ -26,6 +29,7 @@ service:
       request: auth-tokens-delete-request
 
     get:
+      display-name: auth-tokens-get
       path: /auth-tokens.get
       method: GET
       docs: |
@@ -41,6 +45,7 @@ service:
       response: auth-tokens-get-response
 
     list:
+      display-name: auth-tokens-list
       path: /auth-tokens.list
       method: GET
       docs: |
@@ -68,6 +73,7 @@ service:
       response: auth-tokens-list-response
 
     selfDelete:
+      display-name: auth-tokens-self-delete
       path: /auth-tokens.self.delete
       method: POST
       docs: |
@@ -76,6 +82,7 @@ service:
       request: auth-tokens-self-delete-request
 
     update:
+      display-name: auth-tokens-update
       path: /auth-tokens.update
       method: POST
       docs: |

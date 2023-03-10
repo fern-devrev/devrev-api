@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: parts
   auth: true
   base-path: ""
   docs: DevRev part interactions.
   endpoints:
     create:
+      display-name: parts-create
       path: /parts.create
       method: POST
       docs: Creates new [part](https://devrev.ai/docs/product/parts).
@@ -16,6 +18,7 @@ service:
       response: parts-create-response
 
     delete:
+      display-name: parts-delete
       path: /parts.delete
       method: POST
       docs: Deletes a [part](https://devrev.ai/docs/product/parts).
@@ -23,6 +26,7 @@ service:
       response: parts-delete-response
 
     get:
+      display-name: parts-get
       path: /parts.get
       method: GET
       docs: |
@@ -36,6 +40,7 @@ service:
       response: parts-get-response
 
     list:
+      display-name: parts-list
       path: /parts.list
       method: GET
       docs: |
@@ -69,6 +74,7 @@ service:
       response: parts-list-response
 
     update:
+      display-name: parts-update
       path: /parts.update
       method: POST
       docs: |

@@ -4,11 +4,13 @@ imports:
   commons: commons.yml
 
 service:
+  display-name: webhooks
   auth: true
   base-path: ""
   docs: Webhook event APIs.
   endpoints:
     create:
+      display-name: webhooks-create
       path: /webhooks.create
       method: POST
       docs: Creates a new webhook target.
@@ -16,6 +18,7 @@ service:
       response: webhooks-create-response
 
     delete:
+      display-name: webhooks-delete
       path: /webhooks.delete
       method: POST
       docs: Deletes the requested webhook.
@@ -23,6 +26,7 @@ service:
       response: webhooks-delete-response
 
     get:
+      display-name: webhooks-get
       path: /webhooks.get
       method: GET
       docs: Gets the requested webhook's information.
@@ -35,12 +39,14 @@ service:
       response: webhooks-get-response
 
     list:
+      display-name: webhooks-list
       path: /webhooks.list
       method: GET
       docs: Lists the webhooks.
       response: webhooks-list-response
 
     update:
+      display-name: webhooks-update
       path: /webhooks.update
       method: POST
       docs: Updates the requested webhook.
