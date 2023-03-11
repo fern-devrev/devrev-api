@@ -5,13 +5,13 @@ groups:
         version: 0.4.0
         output:
           location: npm
-          package-name: '@fern-api/devrev'
+          package-name: "@fern-api/devrev"
           token: ${FERN_NPM_TOKEN}
         github:
           repository: fern-devrev/devrev-node
         config:
           namespaceExport: DevRev
       - name: fernapi/fern-openapi
-        version: 0.0.22
+        version: 0.0.22-1-g1c86b58
         github:
           repository: fern-devrev/devrev-openapi
