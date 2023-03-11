@@ -153,7 +153,7 @@ types:
     union: 
       bad_request: {}
       missing_required_field: missing-required-field-body
-      parse_error: {}
+      parse_error: parse-error-body
   
   missing-required-field-body: 
     properties: 
@@ -161,6 +161,9 @@ types:
         type: string
         docs: The missing field's name.
   
+  parse-error-body:
+    properties: {}
+
   unauthorized-error-body: 
     base-properties:
       message:
