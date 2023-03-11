@@ -14,10 +14,10 @@ default-environment: Production
 environments: 
   Production: https://api.devrev.ai
 errors: 
-  - commons.bad-request
-  - commons.unauthorized
-  - commons.forbidden
-  - commons.not-found
-  - commons.too-many-requests
+  - commons.bad-request-error
+  - commons.unauthorized-error
+  - commons.forbidden-error
+  - commons.not-found-error
+  - commons.too-many-requests-error
   - commons.internal-server-error
-  - commons.service-unavailable
+  - commons.service-unavailable-error

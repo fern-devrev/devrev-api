@@ -144,38 +144,102 @@ types:
           tagged objects will be associated. The name is guaranteed to be
           unique.
         type: string
-  
-  error-base:
-    properties:
+
+  bad-request-error-body: 
+    base-properties:
       message:
         docs: The message associated with the error.
         type: optional<string>
+    union: 
+      bad_request: {}
+      missing_required_field: missing-required-field-body
+      parse_error: {}
+  
+  missing-required-field-body: 
+    properties: 
+      field_name: 
+        type: string
+        docs: The missing field's name.
+  
+  unauthorized-error-body: 
+    base-properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+    union: 
+      unauthenticated: {} 
+  
+  forbidden-error-body: 
+    base-properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+    union: 
+      forbidden: {} 
+  
+  not-found-error-body: 
+    base-properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+    union: 
+      not_found: {}
+  
+  too-many-requests-error-body: 
+    base-properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+      retry_after: 
+        docs: The number of seconds after which the client should retry.
+        type: optional<integer>
+    union: 
+      too_many_requests: {}
+  
+  internal-server-error-error-body: 
+    base-properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+      reference_id: 
+        docs: A unique ID that's generated for the error that can be used for inquiry.
+        type: optional<integer>
+    union: 
+      internal_error: {}
+  
+  service-unavailable-error-body: 
+    base-properties:
+      message:
+        docs: The message associated with the error.
+        type: optional<string>
+    union: 
+      service_unavailable: {}
 
 errors: 
-  bad-request: 
+  bad-request-error: 
     status-code: 400
-    type: error-base
+    type: bad-request-error-body
   
-  unauthorized: 
+  unauthorized-error: 
     status-code: 401
-    type: error-base
+    type: unauthorized-error-body
   
-  forbidden: 
+  forbidden-error: 
     status-code: 403
-    type: error-base
+    type: forbidden-error-body
   
-  not-found:
+  not-found-error:
     status-code: 404
-    type: error-base
+    type: not-found-error-body
   
-  too-many-requests: 
+  too-many-requests-error: 
     status-code: 429
-    type: error-base
+    type: too-many-requests-error-body
   
   internal-server-error: 
     status-code: 500
-    type: error-base
+    type: internal-server-error-error-body
   
-  service-unavailable: 
+  service-unavailable-error: 
     status-code: 503
-    type: error-base
+    type: service-unavailable-error-body
