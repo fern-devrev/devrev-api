@@ -103,11 +103,11 @@ types:
     properties:
       part: part
 
-  parts-create-request-capability: unknown
+  parts-create-request-capability: map<string, unknown>
 
-  parts-create-request-feature: unknown
+  parts-create-request-feature: map<string, unknown>
 
-  parts-create-request-product: unknown
+  parts-create-request-product: map<string, unknown>
 
   part:
     union:
