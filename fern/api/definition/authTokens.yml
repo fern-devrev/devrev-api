@@ -278,10 +278,10 @@ types:
         type: optional<string>
       expires_at:
         docs: The time at which the token expires.
-        type: optional<string>
+        type: optional<datetime>
       issued_at:
         docs: The time at which the token was issued.
-        type: optional<string>
+        type: optional<datetime>
       requested_token_type: optional<auth-token-requested-token-type>
       scopes:
         docs: The scopes associated with the issued token.

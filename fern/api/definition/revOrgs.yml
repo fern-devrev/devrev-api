@@ -59,12 +59,12 @@ service:
             docs: >
               Filters for objects created after the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           created_date.before:
             docs: |
               Filters for objects created before the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           cursor:
             docs: >
               The cursor to resume iteration from. If not provided, then
@@ -84,12 +84,12 @@ service:
             docs: >
               Filters for objects created after the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           modified_date.before:
             docs: |
               Filters for objects created before the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           sort_by: 
             docs: |
               Fields to sort the Rev organizations by and the direction to sort

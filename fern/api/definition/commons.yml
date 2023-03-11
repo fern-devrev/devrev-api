@@ -6,7 +6,7 @@ types:
       created_by: optional<user-summary>
       created_date:
         docs: Timestamp when the object was created.
-        type: optional<string>
+        type: optional<datetime>
       display_id:
         docs: Human-readable object ID unique to the Dev organization.
         type: optional<string>
@@ -16,7 +16,7 @@ types:
       modified_by: optional<user-summary>
       modified_date:
         docs: Timestamp when the object was last modified.
-        type: optional<string>
+        type: optional<datetime>
 
   user-summary:
     union: 

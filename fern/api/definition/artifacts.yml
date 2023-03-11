@@ -34,7 +34,7 @@ types:
     properties:
       expires_at:
         docs: The expiration timestamp of the URL.
-        type: optional<string>
+        type: optional<datetime>
       url:
         docs: The artifact's download URL.
         type: string

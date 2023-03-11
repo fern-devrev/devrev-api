@@ -70,12 +70,12 @@ service:
             docs: >
               Filters for objects created after the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           target_close_date.before:
             docs: |
               Filters for objects created before the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           ticket.rev_org: 
             docs: |
               Filters for tickets that are associated with any of the provided Rev
@@ -157,12 +157,12 @@ service:
             docs: >
               Filters for objects created after the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           target_close_date.before:
             docs: |
               Filters for objects created before the provided timestamp
               (inclusive).
-            type: optional<string>
+            type: optional<datetime>
           ticket.rev_org: 
             docs: |
               Filters for tickets that are associated with any of the provided Rev
@@ -216,7 +216,7 @@ types:
         type: optional<list<set-tag-with-value>>
       target_close_date:
         docs: Timestamp for when the work is expected to be complete.
-        type: optional<string>
+        type: optional<datetime>
       title:
         docs: Title of the work object.
         type: string
@@ -312,7 +312,7 @@ types:
         type: optional<list<commons.tag-with-value>>
       target_close_date:
         docs: Timestamp when the work is expected to be complete.
-        type: optional<string>
+        type: optional<datetime>
       title:
         docs: Title of the work object.
         type: string
@@ -397,7 +397,7 @@ types:
       target_close_date:
         docs: |
           Updates the timestamp for when the work is expected to be complete.
-        type: optional<string>
+        type: optional<datetime>
       title:
         docs: |
           Updated title of the work object, or unchanged if not provided.
