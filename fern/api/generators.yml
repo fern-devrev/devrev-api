@@ -12,6 +12,6 @@ groups:
         config:
           namespaceExport: DevRev
       - name: fernapi/fern-stoplight
-        version: 0.0.23-8-g479c860
+        version: 0.0.24
         github:
           repository: fern-devrev/devrev-openapi
